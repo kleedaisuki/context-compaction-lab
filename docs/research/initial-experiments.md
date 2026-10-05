@@ -131,6 +131,12 @@ in implementation-review.md and the stochastic analytic control in
 stochastic-model.md. These checks support software correctness under stated
 contracts, not empirical realism.
 
+The first clean-checkout CI run exposed a test setup issue hidden by the local
+workspace: pytest's configured .temp/pytest base directory requires an existing
+.temp parent. Test initialization now creates that parent. The 58 non-temporary
+tests had already passed remotely; this fix does not alter numerical source or
+the recorded experiment source digest.
+
 Next: obtain consented request-level traces, select candidate families using
 held-out whole sessions and tail diagnostics, estimate conditional recovery
 and temporal dependence, and rerun policy selection without treating model

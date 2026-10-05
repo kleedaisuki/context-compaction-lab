@@ -1,0 +1,11 @@
+# Cite the research software; experimental findings remain explicitly scoped.
+cff-version: 1.2.0
+message: "Please cite this repository and the exact commit used for an experiment."
+title: "Context Compaction Lab"
+type: software
+version: 0.1.0
+date-released: 2026-10-06
+authors:
+  - name: "moeSegFault"
+repository-code: "https://github.com/kleedaisuki/context-compaction-lab"
+abstract: "Stochastic expected-cost research for context compaction thresholds and API caching."

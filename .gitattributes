@@ -1,0 +1,2 @@
+# Normalize text in the public repository across Windows and Unix checkouts.
+* text=auto eol=lf

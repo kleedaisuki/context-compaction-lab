@@ -1,0 +1,32 @@
+# Build and test the locked research environment without live model calls.
+name: Research package checks
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.12", "3.14"]
+    env:
+      UV_PYTHON_INSTALL_DIR: .cache/python
+      UV_PYTHON: ${{ matrix.python }}
+      PYTHONPYCACHEPREFIX: .cache/pycache
+      MPLCONFIGDIR: .cache/matplotlib
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.12.9"
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run --locked ruff check src tests
+      - run: uv run --locked pytest
+      - run: uv build --out-dir .cache/dist
+      - run: uv run --locked compaction-lab symbolic
+      - run: uv run --locked compaction-lab sweep --calls 20 --replicates 32 --thresholds 25000:35000:5000

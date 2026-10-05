@@ -1,0 +1,19 @@
+# Local environments, downloaded dependencies, and regenerated experiments.
+/.cache/
+/.venv/
+/.idea/
+/dist/
+/build/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.coverage
+
+# Temporary probes are not maintained test sources; tests live in tests/.
+/.temp/
+
+# No credentials or local API traces in a public repository.
+.env
+.env.*
+*.pem
+*.key

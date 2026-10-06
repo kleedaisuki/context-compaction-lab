@@ -245,6 +245,1398 @@
         "https://developers.openai.com/api/docs/pricing",
         "https://developers.openai.com/api/docs/guides/prompt-caching"
       ]
+    },
+    {
+      "id": "gpt6astra_short",
+      "provider": "OpenAI",
+      "model": "gpt-6-astra",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 10.0,
+        "write": 12.5,
+        "read": 1.0,
+        "output": 50.0
+      },
+      "pricing_per_token": {
+        "input": 1e-05,
+        "write": 1.25e-05,
+        "read": 1e-06,
+        "output": 5e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.1,
+        "output": 5.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected short Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt6astra_long",
+      "provider": "OpenAI",
+      "model": "gpt-6-astra",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 20.0,
+        "write": 25.0,
+        "read": 2.0,
+        "output": 75.0
+      },
+      "pricing_per_token": {
+        "input": 2e-05,
+        "write": 2.5e-05,
+        "read": 2e-06,
+        "output": 7.5e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.1,
+        "output": 3.75
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected long Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt61sol_short",
+      "provider": "OpenAI",
+      "model": "gpt-6.1-sol",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 2.0,
+        "write": 2.5,
+        "read": 0.1,
+        "output": 10.0
+      },
+      "pricing_per_token": {
+        "input": 2e-06,
+        "write": 2.5e-06,
+        "read": 1.0000000000000001e-07,
+        "output": 1e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.05,
+        "output": 5.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected short Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt61sol_long",
+      "provider": "OpenAI",
+      "model": "gpt-6.1-sol",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 4.0,
+        "write": 5.0,
+        "read": 0.2,
+        "output": 15.0
+      },
+      "pricing_per_token": {
+        "input": 4e-06,
+        "write": 5e-06,
+        "read": 2.0000000000000002e-07,
+        "output": 1.5e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.05,
+        "output": 3.75
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected long Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt6luna_short",
+      "provider": "OpenAI",
+      "model": "gpt-6-luna",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.1,
+        "write": 0.125,
+        "read": 0.01,
+        "output": 0.5
+      },
+      "pricing_per_token": {
+        "input": 1.0000000000000001e-07,
+        "write": 1.25e-07,
+        "read": 1e-08,
+        "output": 5e-07
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.09999999999999999,
+        "output": 5.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected short Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt6luna_long",
+      "provider": "OpenAI",
+      "model": "gpt-6-luna",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.2,
+        "write": 0.25,
+        "read": 0.02,
+        "output": 0.75
+      },
+      "pricing_per_token": {
+        "input": 2.0000000000000002e-07,
+        "write": 2.5e-07,
+        "read": 2e-08,
+        "output": 7.5e-07
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.09999999999999999,
+        "output": 3.75
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected long Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt6sol_short",
+      "provider": "OpenAI",
+      "model": "gpt-6-sol",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 2.0,
+        "write": 2.5,
+        "read": 0.2,
+        "output": 10.0
+      },
+      "pricing_per_token": {
+        "input": 2e-06,
+        "write": 2.5e-06,
+        "read": 2.0000000000000002e-07,
+        "output": 1e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.1,
+        "output": 5.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected short Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt56sol_short",
+      "provider": "OpenAI",
+      "model": "gpt-5.6-sol",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 4.0,
+        "write": 5.0,
+        "read": 0.4,
+        "output": 20.0
+      },
+      "pricing_per_token": {
+        "input": 4e-06,
+        "write": 5e-06,
+        "read": 4.0000000000000003e-07,
+        "output": 2e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.1,
+        "output": 5.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected short Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt56sol_long",
+      "provider": "OpenAI",
+      "model": "gpt-5.6-sol",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 8.0,
+        "write": 10.0,
+        "read": 0.8,
+        "output": 30.0
+      },
+      "pricing_per_token": {
+        "input": 8e-06,
+        "write": 1e-05,
+        "read": 8.000000000000001e-07,
+        "output": 3e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.1,
+        "output": 3.75
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected long Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt56terra_short",
+      "provider": "OpenAI",
+      "model": "gpt-5.6-terra",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 2.0,
+        "write": 2.5,
+        "read": 0.2,
+        "output": 12.0
+      },
+      "pricing_per_token": {
+        "input": 2e-06,
+        "write": 2.5e-06,
+        "read": 2.0000000000000002e-07,
+        "output": 1.2e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.1,
+        "output": 6.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected short Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt56luna_short",
+      "provider": "OpenAI",
+      "model": "gpt-5.6-luna",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.2,
+        "write": 0.25,
+        "read": 0.02,
+        "output": 1.2
+      },
+      "pricing_per_token": {
+        "input": 2.0000000000000002e-07,
+        "write": 2.5e-07,
+        "read": 2e-08,
+        "output": 1.2e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.09999999999999999,
+        "output": 5.999999999999999
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected short Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Direct quoted cache-write rate, not additive to input",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "GPT-5.6+ eligible prefix boundaries",
+        "ttl_seconds": 1800,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt54_short",
+      "provider": "OpenAI",
+      "model": "gpt-5.4",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 2.5,
+        "write": 2.5,
+        "read": 0.25,
+        "output": 15.0
+      },
+      "pricing_per_token": {
+        "input": 2.5e-06,
+        "write": 2.5e-06,
+        "read": 2.5e-07,
+        "output": 1.5e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.1,
+        "output": 6.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected short Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Effective write=input; no additional cache-write fee on this earlier model",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "earlier implicit caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt54_long",
+      "provider": "OpenAI",
+      "model": "gpt-5.4",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 5.0,
+        "write": 5.0,
+        "read": 0.5,
+        "output": 22.5
+      },
+      "pricing_per_token": {
+        "input": 5e-06,
+        "write": 5e-06,
+        "read": 5e-07,
+        "output": 2.25e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.1,
+        "output": 4.5
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Selected long Standard tariff; short <=272000 input tokens, long >272000",
+        "cache_write_projection": "Effective write=input; no additional cache-write fee on this earlier model",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "earlier implicit caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt54mini_short",
+      "provider": "OpenAI",
+      "model": "gpt-5.4-mini",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.75,
+        "write": 0.75,
+        "read": 0.075,
+        "output": 4.5
+      },
+      "pricing_per_token": {
+        "input": 7.5e-07,
+        "write": 7.5e-07,
+        "read": 7.5e-08,
+        "output": 4.5e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.09999999999999999,
+        "output": 6.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Single selected Standard pricing row; actual capacity is not imposed",
+        "cache_write_projection": "Effective write=input; no additional cache-write fee on this earlier model",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "earlier implicit caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt52_short",
+      "provider": "OpenAI",
+      "model": "gpt-5.2",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 1.75,
+        "write": 1.75,
+        "read": 0.175,
+        "output": 14.0
+      },
+      "pricing_per_token": {
+        "input": 1.75e-06,
+        "write": 1.75e-06,
+        "read": 1.75e-07,
+        "output": 1.4e-05
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.09999999999999999,
+        "output": 8.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Single selected Standard pricing row; actual capacity is not imposed",
+        "cache_write_projection": "Effective write=input; no additional cache-write fee on this earlier model",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "earlier implicit caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "gpt41_short",
+      "provider": "OpenAI",
+      "model": "gpt-4.1",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 2.0,
+        "write": 2.0,
+        "read": 0.5,
+        "output": 8.0
+      },
+      "pricing_per_token": {
+        "input": 2e-06,
+        "write": 2e-06,
+        "read": 5e-07,
+        "output": 8e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.25,
+        "output": 4.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party global; no residency uplift or tool charges",
+        "context_band": "Single selected Standard pricing row; actual capacity is not imposed",
+        "cache_write_projection": "Effective write=input; no additional cache-write fee on this earlier model",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "earlier implicit caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Eligibility, cache boundaries, tokenizer and actual retention are metadata, not q overrides."
+      },
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing",
+        "https://developers.openai.com/api/docs/pricing.md",
+        "https://developers.openai.com/api/docs/guides/prompt-caching"
+      ]
+    },
+    {
+      "id": "qwen38max_beijing_explicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.8-max",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 1.65,
+        "write": 2.063,
+        "read": 0.137,
+        "output": 4.951
+      },
+      "pricing_per_token": {
+        "input": 1.6499999999999999e-06,
+        "write": 2.063e-06,
+        "read": 1.3700000000000002e-07,
+        "output": 4.951e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.2503030303030305,
+        "read": 0.08303030303030304,
+        "output": 3.0006060606060605
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "China (Beijing)",
+        "context_band": "No input-price tier through documented 1M context",
+        "cache_write_projection": "Direct model-specific explicit creation rate",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "explicit",
+        "ttl_seconds": 300,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ],
+      "native_quote": {
+        "currency": "CNY",
+        "prices_per_million_tokens": {
+          "input": 12,
+          "write": 15,
+          "read": 1,
+          "output": 36
+        },
+        "source": "https://help.aliyun.com/zh/model-studio/qwen3-8-max",
+        "note": "Separate native quote, not used as USD nor converted using an assumed exchange rate. The English USD table is independently rounded."
+      }
+    },
+    {
+      "id": "qwen38max_beijing_implicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.8-max",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 1.65,
+        "write": 1.65,
+        "read": 0.206,
+        "output": 4.951
+      },
+      "pricing_per_token": {
+        "input": 1.6499999999999999e-06,
+        "write": 1.6499999999999999e-06,
+        "read": 2.06e-07,
+        "output": 4.951e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.12484848484848485,
+        "output": 3.0006060606060605
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "China (Beijing)",
+        "context_band": "No input-price tier through documented 1M context",
+        "cache_write_projection": "Effective write=input; automatic cache creation has no extra fee",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "implicit",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ],
+      "native_quote": {
+        "currency": "CNY",
+        "prices_per_million_tokens": {
+          "input": 12,
+          "write": 12,
+          "read": 1.5,
+          "output": 36
+        },
+        "source": "https://help.aliyun.com/zh/model-studio/qwen3-8-max",
+        "note": "Separate native quote, not used as USD nor converted using an assumed exchange rate. The English USD table is independently rounded."
+      }
+    },
+    {
+      "id": "qwen38max_singapore_explicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.8-max",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 2,
+        "write": 2.5,
+        "read": 0.17,
+        "output": 6
+      },
+      "pricing_per_token": {
+        "input": 2e-06,
+        "write": 2.5e-06,
+        "read": 1.7000000000000001e-07,
+        "output": 6e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.085,
+        "output": 3.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "Singapore / International",
+        "context_band": "No input-price tier through documented 1M context",
+        "cache_write_projection": "Direct model-specific explicit creation rate",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "explicit",
+        "ttl_seconds": 300,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen38max_singapore_implicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.8-max",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 2,
+        "write": 2,
+        "read": 0.25,
+        "output": 6
+      },
+      "pricing_per_token": {
+        "input": 2e-06,
+        "write": 2e-06,
+        "read": 2.5e-07,
+        "output": 6e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.125,
+        "output": 3.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "Singapore / International",
+        "context_band": "No input-price tier through documented 1M context",
+        "cache_write_projection": "Effective write=input; automatic cache creation has no extra fee",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "implicit",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen38flash_beijing_explicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.8-flash",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.113,
+        "write": 0.177,
+        "read": 0.014,
+        "output": 0.382
+      },
+      "pricing_per_token": {
+        "input": 1.13e-07,
+        "write": 1.7699999999999998e-07,
+        "read": 1.4e-08,
+        "output": 3.82e-07
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.566371681415929,
+        "read": 0.12389380530973451,
+        "output": 3.3805309734513274
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "China (Beijing)",
+        "context_band": "No input-price tier through documented 1M context",
+        "cache_write_projection": "Direct model-specific explicit creation rate",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated",
+        "cache_quote_conflict": "Specific model page quotes a creation/input ratio other than generic 1.25x prose. This projection uses the specific published table; no actual billing experiment resolves the discrepancy."
+      },
+      "provider_cache_metadata": {
+        "mode": "explicit",
+        "ttl_seconds": 300,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen38flash_beijing_implicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.8-flash",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.113,
+        "write": 0.113,
+        "read": 0.014,
+        "output": 0.382
+      },
+      "pricing_per_token": {
+        "input": 1.13e-07,
+        "write": 1.13e-07,
+        "read": 1.4e-08,
+        "output": 3.82e-07
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.12389380530973451,
+        "output": 3.3805309734513274
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "China (Beijing)",
+        "context_band": "No input-price tier through documented 1M context",
+        "cache_write_projection": "Effective write=input; automatic cache creation has no extra fee",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "implicit",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen38flash_singapore_explicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.8-flash",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.15,
+        "write": 0.2,
+        "read": 0.016,
+        "output": 0.47
+      },
+      "pricing_per_token": {
+        "input": 1.5e-07,
+        "write": 2.0000000000000002e-07,
+        "read": 1.6e-08,
+        "output": 4.6999999999999995e-07
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.3333333333333335,
+        "read": 0.10666666666666667,
+        "output": 3.1333333333333333
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "Singapore / International",
+        "context_band": "No input-price tier through documented 1M context",
+        "cache_write_projection": "Direct model-specific explicit creation rate",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated",
+        "cache_quote_conflict": "Specific model page quotes a creation/input ratio other than generic 1.25x prose. This projection uses the specific published table; no actual billing experiment resolves the discrepancy."
+      },
+      "provider_cache_metadata": {
+        "mode": "explicit",
+        "ttl_seconds": 300,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen38flash_singapore_implicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.8-flash",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.15,
+        "write": 0.15,
+        "read": 0.016,
+        "output": 0.47
+      },
+      "pricing_per_token": {
+        "input": 1.5e-07,
+        "write": 1.5e-07,
+        "read": 1.6e-08,
+        "output": 4.6999999999999995e-07
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.10666666666666667,
+        "output": 3.1333333333333333
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "Singapore / International",
+        "context_band": "No input-price tier through documented 1M context",
+        "cache_write_projection": "Effective write=input; automatic cache creation has no extra fee",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "implicit",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen37plus_singapore_short_explicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.7-plus",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.4,
+        "write": 0.5,
+        "read": 0.04,
+        "output": 1.6
+      },
+      "pricing_per_token": {
+        "input": 4.0000000000000003e-07,
+        "write": 5e-07,
+        "read": 4e-08,
+        "output": 1.6000000000000001e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.09999999999999999,
+        "output": 4.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "Singapore / International",
+        "context_band": "Selected input<=256k tariff only",
+        "cache_write_projection": "Direct model-specific explicit creation rate",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "explicit",
+        "ttl_seconds": 300,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen37plus_singapore_short_implicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.7-plus",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.4,
+        "write": 0.4,
+        "read": 0.08,
+        "output": 1.6
+      },
+      "pricing_per_token": {
+        "input": 4.0000000000000003e-07,
+        "write": 4.0000000000000003e-07,
+        "read": 8e-08,
+        "output": 1.6000000000000001e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.19999999999999998,
+        "output": 4.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "Singapore / International",
+        "context_band": "Selected input<=256k tariff only",
+        "cache_write_projection": "Effective write=input; automatic cache creation has no extra fee",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "implicit",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen37plus_singapore_long_explicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.7-plus",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 1.2,
+        "write": 1.5,
+        "read": 0.12,
+        "output": 4.8
+      },
+      "pricing_per_token": {
+        "input": 1.2e-06,
+        "write": 1.5e-06,
+        "read": 1.2e-07,
+        "output": 4.8e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.25,
+        "read": 0.1,
+        "output": 4.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "Singapore / International",
+        "context_band": "Selected 256k<input<=1m tariff only",
+        "cache_write_projection": "Direct model-specific explicit creation rate",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "explicit",
+        "ttl_seconds": 300,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "qwen37plus_singapore_long_implicit",
+      "provider": "Alibaba Cloud",
+      "model": "qwen3.7-plus",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 1.2,
+        "write": 1.2,
+        "read": 0.24,
+        "output": 4.8
+      },
+      "pricing_per_token": {
+        "input": 1.2e-06,
+        "write": 1.2e-06,
+        "read": 2.4e-07,
+        "output": 4.8e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.2,
+        "output": 4.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "Singapore / International",
+        "context_band": "Selected 256k<input<=1m tariff only",
+        "cache_write_projection": "Effective write=input; automatic cache creation has no extra fee",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated"
+      },
+      "provider_cache_metadata": {
+        "mode": "implicit",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": 1024,
+        "notes": "Modes are mutually exclusive; explicit reuse refreshes lifetime. Hit probability remains controlled. Specific model-rate quotes override generic cache discount examples."
+      },
+      "sources": [
+        "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+        "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+      ]
+    },
+    {
+      "id": "deepseek41flash_offpeak",
+      "provider": "DeepSeek",
+      "model": "deepseek-flash",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.15,
+        "write": 0.15,
+        "read": 0.003,
+        "output": 0.6
+      },
+      "pricing_per_token": {
+        "input": 1.5e-07,
+        "write": 1.5e-07,
+        "read": 3e-09,
+        "output": 6e-07
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.02,
+        "output": 4.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party DeepSeek API; not Alibaba-hosted DeepSeek",
+        "context_band": "1M context; selected offpeak tariff applied to entire controlled ledger",
+        "cache_write_projection": "Effective write=cache-miss input; no separate creation charge in the quoted token schedule",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated",
+        "time_band": "Peak: weekdays UTC 01:00-04:00 and 06:00-10:00, excluding Chinese public holidays; all other times off-peak. No dynamic time-band switching simulated."
+      },
+      "provider_cache_metadata": {
+        "mode": "automatic best-effort disk prefix caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Cache construction takes seconds; idle caches usually clear after hours to days. Output/user endpoints are cache units; no guaranteed q=1."
+      },
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing/",
+        "https://api-docs.deepseek.com/guides/kv_cache/"
+      ],
+      "provider_model_version": "DeepSeek-V4.1-Flash"
+    },
+    {
+      "id": "deepseek41flash_peak",
+      "provider": "DeepSeek",
+      "model": "deepseek-flash",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.3,
+        "write": 0.3,
+        "read": 0.006,
+        "output": 1.2
+      },
+      "pricing_per_token": {
+        "input": 3e-07,
+        "write": 3e-07,
+        "read": 6e-09,
+        "output": 1.2e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.02,
+        "output": 4.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party DeepSeek API; not Alibaba-hosted DeepSeek",
+        "context_band": "1M context; selected peak tariff applied to entire controlled ledger",
+        "cache_write_projection": "Effective write=cache-miss input; no separate creation charge in the quoted token schedule",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated",
+        "time_band": "Peak: weekdays UTC 01:00-04:00 and 06:00-10:00, excluding Chinese public holidays; all other times off-peak. No dynamic time-band switching simulated."
+      },
+      "provider_cache_metadata": {
+        "mode": "automatic best-effort disk prefix caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Cache construction takes seconds; idle caches usually clear after hours to days. Output/user endpoints are cache units; no guaranteed q=1."
+      },
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing/",
+        "https://api-docs.deepseek.com/guides/kv_cache/"
+      ],
+      "provider_model_version": "DeepSeek-V4.1-Flash"
+    },
+    {
+      "id": "deepseek4pro_offpeak",
+      "provider": "DeepSeek",
+      "model": "deepseek-v4-pro",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 0.66,
+        "write": 0.66,
+        "read": 0.022,
+        "output": 1.98
+      },
+      "pricing_per_token": {
+        "input": 6.6e-07,
+        "write": 6.6e-07,
+        "read": 2.2e-08,
+        "output": 1.98e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.03333333333333333,
+        "output": 3.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party DeepSeek API; not Alibaba-hosted DeepSeek",
+        "context_band": "1M context; selected offpeak tariff applied to entire controlled ledger",
+        "cache_write_projection": "Effective write=cache-miss input; no separate creation charge in the quoted token schedule",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated",
+        "time_band": "Peak: weekdays UTC 01:00-04:00 and 06:00-10:00, excluding Chinese public holidays; all other times off-peak. No dynamic time-band switching simulated."
+      },
+      "provider_cache_metadata": {
+        "mode": "automatic best-effort disk prefix caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Cache construction takes seconds; idle caches usually clear after hours to days. Output/user endpoints are cache units; no guaranteed q=1."
+      },
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing/",
+        "https://api-docs.deepseek.com/guides/kv_cache/"
+      ],
+      "provider_model_version": "DeepSeek-V4-Pro-0813"
+    },
+    {
+      "id": "deepseek4pro_peak",
+      "provider": "DeepSeek",
+      "model": "deepseek-v4-pro",
+      "status": "official_rates_projected_into_controlled_ledger",
+      "catalog_extension": "gpt_qwen_deepseek_2026_10_06",
+      "prices_per_million_usd": {
+        "input": 1.32,
+        "write": 1.32,
+        "read": 0.044,
+        "output": 3.96
+      },
+      "pricing_per_token": {
+        "input": 1.32e-06,
+        "write": 1.32e-06,
+        "read": 4.4e-08,
+        "output": 3.96e-06
+      },
+      "normalized_to_input": {
+        "input": 1.0,
+        "write": 1.0,
+        "read": 0.03333333333333333,
+        "output": 3.0
+      },
+      "qualifiers": {
+        "processing": "Standard synchronous, not Batch/Fast/Flex",
+        "region": "First-party DeepSeek API; not Alibaba-hosted DeepSeek",
+        "context_band": "1M context; selected peak tariff applied to entire controlled ledger",
+        "cache_write_projection": "Effective write=cache-miss input; no separate creation charge in the quoted token schedule",
+        "tier_application": "Isolated constant-rate projection; per-request tier switching and capacity are NOT simulated",
+        "time_band": "Peak: weekdays UTC 01:00-04:00 and 06:00-10:00, excluding Chinese public holidays; all other times off-peak. No dynamic time-band switching simulated."
+      },
+      "provider_cache_metadata": {
+        "mode": "automatic best-effort disk prefix caching",
+        "ttl_seconds": null,
+        "minimum_cacheable_tokens": null,
+        "notes": "Cache construction takes seconds; idle caches usually clear after hours to days. Output/user endpoints are cache units; no guaranteed q=1."
+      },
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing/",
+        "https://api-docs.deepseek.com/guides/kv_cache/"
+      ],
+      "provider_model_version": "DeepSeek-V4-Pro-0813"
     }
   ],
   "hypothetical_scenarios": [
@@ -335,5 +1727,23 @@
       },
       "source": "https://ai.google.dev/gemini-api/docs/pricing"
     }
-  ]
+  ],
+  "source_capture": {
+    "openai-pricing": {
+      "sha256": "77745f7cbbab415a5433fc049e869ccd6a3bec99312eafe2fbc449ba3d7e78a8",
+      "note": "SHA identifies locally fetched first-party text; full page not published."
+    },
+    "qwen38max": {
+      "sha256": "afc7aac589d70d041f08e4cf94b3d3f140064bbd987e8ed2b43edc81ae13cefc",
+      "note": "SHA identifies locally fetched first-party text; full page not published."
+    },
+    "qwen38flash": {
+      "sha256": "766f6b52c573c357085b4880c7e0bf705fd5b362ab4e6c39b622d99651f51dc0",
+      "note": "SHA identifies locally fetched first-party text; full page not published."
+    },
+    "qwen37plus": {
+      "sha256": "18a3f5783326ad1f0b75ad18ed0f1b3589b3b4a907bf8629c1f545c7615872f5",
+      "note": "SHA identifies locally fetched first-party text; full page not published."
+    }
+  }
 }

@@ -16,7 +16,7 @@ token unless a distinct provider fee actually requires that accounting.
 ## 1. Usable official vectors
 
 Order below is `(input, write, read, output)`, all USD per million tokens.
-These are Standard synchronous first-party global rates, excluding Batch,
+The initial six entries are Standard synchronous first-party global rates, excluding Batch,
 Fast, residency uplifts, negotiated discounts, tools, taxes and subscriptions.
 
 | JSON ID | Model / write TTL | Price vector | Input-normalized vector |
@@ -48,6 +48,10 @@ their 30m lifetime from earlier models' retention policies.
 No requested model was replaced silently. The local `openai-docs` skill was
 consulted; official documentation was searched and fetched. No credential,
 paid API request or private account information was used.
+
+The expanded catalog now contains 38 vectors, including region-specific Qwen
+quotes and DeepSeek time bands. See the extension below. The original six
+entries and IDs are retained; regional additions are not global-price claims.
 
 ## 2. What price-only interventions can establish
 
@@ -156,3 +160,122 @@ effective earlier-OpenAI write/input identity. No live provider execution was
 performed. Reverify linked official pages before later reuse: prices are
 time-sensitive and this artifact is a dated research input, not an evergreen
 price resolver.
+
+## 6. GPT / Qwen / DeepSeek catalog extension (2026-10-06)
+
+The added vectors preserve the old identifiers and USD/token contract. They
+are selected first-party quotes projected into the same controlled ledger,
+not a new cross-provider tokenizer/performance experiment. Rates are USD per
+million tokens in (input,write,read,output) order. Context/time bands are held
+constant in a row. Applying a real band depends on EACH request, not H alone:
+a crossing compactor can exceed a tariff boundary even when H is below it.
+Therefore none of these constant-vector minima claims to optimize full tiered
+provider billing. No actual cache lifetime or model capacity is imposed.
+
+### GPT Standard vectors
+
+The HTML pricing page hides some all-model rows in collapsed sections. Its
+first-party Markdown version exposes the named **Standard pricing data** table;
+we fetched that table, not adjacent Batch/Flex tables. New cache-write rates
+are direct and disjoint; earlier models without an extra write fee use effective
+write=input. GPT-5.6 Sol's currently quoted promotion is documented through at
+least 2026-11-21, not a timeless list-price assumption.
+
+Primary sources: [official pricing](https://developers.openai.com/api/docs/pricing),
+[first-party Markdown](https://developers.openai.com/api/docs/pricing.md),
+[cache rules](https://developers.openai.com/api/docs/guides/prompt-caching).
+Short/long rows use the 272k input boundary. Single selected rows are not claims
+that capacity or all other price bands disappear.
+
+| ID | Model / tariff | Vector |
+| --- | --- | --- |
+| `gpt6astra_short` | gpt-6-astra / short | (10, 12.5, 1, 50) |
+| `gpt6astra_long` | gpt-6-astra / long | (20, 25, 2, 75) |
+| `gpt61sol_short` | gpt-6.1-sol / short | (2, 2.5, 0.1, 10) |
+| `gpt61sol_long` | gpt-6.1-sol / long | (4, 5, 0.2, 15) |
+| `gpt6luna_short` | gpt-6-luna / short | (0.1, 0.125, 0.01, 0.5) |
+| `gpt6luna_long` | gpt-6-luna / long | (0.2, 0.25, 0.02, 0.75) |
+| `gpt6sol_short` | gpt-6-sol / short | (2, 2.5, 0.2, 10) |
+| `gpt56sol_short` | gpt-5.6-sol / short | (4, 5, 0.4, 20) |
+| `gpt56sol_long` | gpt-5.6-sol / long | (8, 10, 0.8, 30) |
+| `gpt56terra_short` | gpt-5.6-terra / short | (2, 2.5, 0.2, 12) |
+| `gpt56luna_short` | gpt-5.6-luna / short | (0.2, 0.25, 0.02, 1.2) |
+| `gpt54_short` | gpt-5.4 / short | (2.5, 2.5, 0.25, 15) |
+| `gpt54_long` | gpt-5.4 / long | (5, 5, 0.5, 22.5) |
+| `gpt54mini_short` | gpt-5.4-mini / short | (0.75, 0.75, 0.075, 4.5) |
+| `gpt52_short` | gpt-5.2 / short | (1.75, 1.75, 0.175, 14) |
+| `gpt41_short` | gpt-4.1 / short | (2, 2, 0.5, 8) |
+
+### Qwen: specific model quotes, region and cache mode
+
+Use mutually exclusive explicit and implicit modes. Creation in implicit mode
+has no extra fee; effective write=input. Explicit mode quotes a separate
+creation rate. q remains an independent controlled probability in BOTH modes:
+no actual hit guarantee is inferred from the mode label.
+
+The generic cache page cannot safely supply all newer discounts. For 3.8 Max,
+read quotes differ from generic 10%/20% examples. For 3.8 Flash, even the explicit
+creation/input ratios on the specific model pages differ from generic 1.25x
+creation prose. We preserve the **specific published table** and flag that
+source discrepancy in JSON. No actual billing run resolves it here; do not
+present the selected quote as an independently reconciled provider invoice.
+
+Sources: [3.8 Max](https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max),
+[3.8 Flash](https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash),
+[3.7 Plus](https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus), and
+[cache modes](https://www.alibabacloud.com/help/en/model-studio/context-cache).
+For 3.7 Plus the two quoted tiers split at 256k input tokens.
+
+| ID | Region / mode | Vector |
+| --- | --- | --- |
+| `qwen38max_beijing_explicit` | China (Beijing) / explicit | (1.65, 2.063, 0.137, 4.951) |
+| `qwen38max_beijing_implicit` | China (Beijing) / implicit | (1.65, 1.65, 0.206, 4.951) |
+| `qwen38max_singapore_explicit` | Singapore / International / explicit | (2, 2.5, 0.17, 6) |
+| `qwen38max_singapore_implicit` | Singapore / International / implicit | (2, 2, 0.25, 6) |
+| `qwen38flash_beijing_explicit` | China (Beijing) / explicit | (0.113, 0.177, 0.014, 0.382) |
+| `qwen38flash_beijing_implicit` | China (Beijing) / implicit | (0.113, 0.113, 0.014, 0.382) |
+| `qwen38flash_singapore_explicit` | Singapore / International / explicit | (0.15, 0.2, 0.016, 0.47) |
+| `qwen38flash_singapore_implicit` | Singapore / International / implicit | (0.15, 0.15, 0.016, 0.47) |
+| `qwen37plus_singapore_short_explicit` | Singapore / International / explicit | (0.4, 0.5, 0.04, 1.6) |
+| `qwen37plus_singapore_short_implicit` | Singapore / International / implicit | (0.4, 0.4, 0.08, 1.6) |
+| `qwen37plus_singapore_long_explicit` | Singapore / International / explicit | (1.2, 1.5, 0.12, 4.8) |
+| `qwen37plus_singapore_long_implicit` | Singapore / International / implicit | (1.2, 1.2, 0.24, 4.8) |
+
+Beijing's English USD table is not Singapore pricing and is not an inferred FX
+conversion. The native [Chinese Max quote](https://help.aliyun.com/zh/model-studio/qwen3-8-max)
+is separately recorded: explicit CNY (12,15,1,36); implicit CNY (12,12,1.5,36),
+per million tokens. Native CNY is NOT silently treated as USD. Independently
+rounded USD/CNY quote ratios need not yield exactly the same threshold.
+
+### DeepSeek: first-party, peak versus off-peak
+
+Source: [official prices](https://api-docs.deepseek.com/quick_start/pricing/) and
+[cache mechanism](https://api-docs.deepseek.com/guides/kv_cache/).
+The active API alias `deepseek-flash` identifies V4.1 Flash; the Pro quote is
+V4-Pro-0813. Do not silently reuse old V3/R1 or Alibaba-hosted DeepSeek prices.
+Effective write equals miss input, not zero and not an added second input fee.
+Best-effort cache construction takes seconds; reported idle retention is hours
+or days, not guaranteed lifetime or q=1.
+
+| ID | Active model version / time | Vector |
+| --- | --- | --- |
+| `deepseek41flash_offpeak` | DeepSeek-V4.1-Flash / offpeak | (0.15, 0.15, 0.003, 0.6) |
+| `deepseek41flash_peak` | DeepSeek-V4.1-Flash / peak | (0.3, 0.3, 0.006, 1.2) |
+| `deepseek4pro_offpeak` | DeepSeek-V4-Pro-0813 / offpeak | (0.66, 0.66, 0.022, 1.98) |
+| `deepseek4pro_peak` | DeepSeek-V4-Pro-0813 / peak | (1.32, 1.32, 0.044, 3.96) |
+
+Peak is weekdays UTC 01:00-04:00 and 06:00-10:00, excluding Chinese public
+holidays; mainland clock times are 09:00-12:00 and 14:00-18:00. All other
+hours are off-peak. Every quoted peak component is exactly twice off-peak:
+constant-band invoices double but optimal controls cannot change. Dynamic
+clock-dependent trajectories are a different experiment.
+
+### Reproduction and scope
+
+`price-family-results.json` embeds the exact scenario metadata as well as the
+source SHA and q conditions. Source-text capture hashes in the catalog identify
+local primary-source fetches; full copyrighted pages remain in `.cache`.
+The executable expanded study is documented in `price-family-study.md`.
+Original 35-case artifacts remain unchanged as historical evidence. The next
+step for genuine tiered/time-dependent invoices is category occupation by
+request price band, not assigning one band from the scalar compact trigger.

@@ -1,5 +1,10 @@
 # Mandatory file restoration: community-to-theory synthesis
 
+Status update: v0.2 now implements and executes this model. See
+[working-set experiment results](working-set-experiments.md) and
+[independent validation](working-set-validation.md). The original sections below
+record the research milestone and retain their historical scope.
+
 Recorded 2026-10-06. Five parallel tracks investigated source implementations,
 community incidents/data, selected academic literature, stochastic derivations,
 and alternative mathematical tools. The original fixed-normal-action objective

@@ -1,5 +1,15 @@
 # Research plan: expected invoice-optimal compaction thresholds
 
+## Implemented working-set experiment milestone (v0.2, 2026-10-06)
+
+The finite-horizon versioned model and tests are delivered; it is no longer
+only a proposed extension. See working-set-experiments.md, working-set-results.json,
+working-set-exact-control.md and working-set-validation.md. Actual source-file
+proxy measurements, empirical output-only block resampling, nine mechanism
+cases, independent fine-grid confirmation and exhaustive small controls are
+executed. Legacy APIs remain compatible. Concentrated compulsory recovery is
+tested as a mandatory working-set limit, not rejected by fiat.
+
 ## Community/theory milestone (2026-10-06)
 
 Five parallel tracks and four maintained uv/Python probes now support a hybrid

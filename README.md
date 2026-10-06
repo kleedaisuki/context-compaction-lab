@@ -5,11 +5,55 @@ compaction thresholds**. It uses stochastic workloads, explicit token-category
 accounting, an exact first-passage control, and paired Monte Carlo comparisons.
 It does not optimize task quality or claim a universal threshold.
 
+## v0.2 working-set laboratory (primary experiment)
+
+The implemented model now tracks current file versions, visible snapshots,
+qualifying-read state, recent valid observations, exact-prefix reuse and TTL.
+It supports eager versus first-use restoration, fixed ordinary observations,
+additional billed recovery rounds, and bounded strict read/compact loops.
+The older aggregate engine remains a compatibility/control interface.
+
+**Executed results:** with four real whole-file size proxies totaling 61,318
+tokens, empirical public output blocks, and explicit controlled task/cache
+assumptions, the mandatory-all-files fine-grid selection is **126k** (1% grid
+region **116k-138k**). Phase-local first-use selection is **78k** (**68k-86k**).
+These are conditional scenario results, not universal production thresholds.
+See [implemented experiment report](docs/research/working-set-experiments.md),
+[portable results](docs/research/working-set-results.json), and
+[exact control](docs/research/working-set-exact-control.md).
+
+After the setup below, download the explicitly pinned public trace into the
+project cache. On PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force .cache/community-data | Out-Null
+curl.exe -L --fail --output .cache/community-data/syfi-v0.0.2.jsonl.gz https://github.com/uw-syfi/TraceLab/releases/download/v0.0.2/syfi_coding_trace.jsonl.gz
+uv run compaction-lab prepare-working-set --trace .cache/community-data/syfi-v0.0.2.jsonl.gz
+uv run compaction-lab working-set --demand mandatory --policies first_use_warm
+uv run python experiments/run_working_set_study.py --replicates 2048 --jobs 2
+```
+
+On Linux/macOS use `mkdir -p .cache/community-data` and `curl` instead of the
+first two PowerShell commands. Preparation verifies the public release checksum,
+downloads four pinned public source files, measures them with `cl100k_base`,
+and saves a local output-only block pool. No model API calls or credentials.
+The trace is 100.9 MB compressed; neither it nor source-file bodies are committed.
+
+Do not use measured fresh append as background growth: it includes replay and
+file payloads. The new experiment separately samples measured output, controlled
+non-file input and explicit compulsory restoration. File-access laws, stable
+base, summary size, and timing controls are recorded, not presented as fitted.
+
+Primary modules are `working_set_config.py`, `working_set_simulation.py`,
+`working_set_data.py`, `working_set_workloads.py`, `working_set_inference.py`,
+and `working_set_cli.py`. The complete environment remains the root `.venv`.
+
 New research milestone: [mandatory restoration synthesis](docs/research/mandatory-reload-synthesis.md)
 connects four production systems, community incidents, seven selected papers,
 six mathematical tools, a full public TraceLab usage profile, and exact/Monte
 Carlo first-use probes. It selects a hybrid working-set model for the next
 implementation; it does not silently change the packaged aggregate simulator.
+That research-only milestone has now been implemented by v0.2 as described above.
 
 ## Research question
 

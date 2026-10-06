@@ -199,4 +199,3 @@ read_required, restored_in_tail, refusal_rounds)` per compaction, plus the
 per-call invoice fields. Measure shell-result/output truncation separately.
 Freeze ordinary edits/searches; restoration-only tool calls are an explicit
 additional-call component, not silently added to fixed-call work.
-

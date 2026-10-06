@@ -1,5 +1,21 @@
 # Research plan: expected invoice-optimal compaction thresholds
 
+## Community/theory milestone (2026-10-06)
+
+Five parallel tracks and four maintained uv/Python probes now support a hybrid
+immediate-plus-mandatory-first-use model. See mandatory-reload-synthesis.md,
+mandatory-reload-research-plan.md, and their linked evidence/theory artifacts.
+The next primary extension is finite-horizon versioned working-set reward
+evaluation with separate tool eligibility and exact-prefix cache state, not
+another iid reset-size family. The aggregate engineering profile remains a
+control. Full public TraceLab v0.0.2 usage was profiled; missing file identities
+and explicit compact markers prevent a compulsory reread distribution fit.
+
+Discriminating next test: hold file sizes and fixed ordinary actions equal,
+permute first-use delay, retain versus clear valid facts, and separately toggle
+stable prefix survival. Check read-edit atomicity/compaction loops. Constant D
+is a valid reduction only when compulsory working-set saturation is rapid.
+
 Recorded 2026-10-06. Mathematical specification: [stochastic-model.md](stochastic-model.md). Historical deterministic calculator: [compaction-threshold-symbolic.md](compaction-threshold-symbolic.md).
 
 Premise refinement in v0.1.1: the main recovery state uses project-specific

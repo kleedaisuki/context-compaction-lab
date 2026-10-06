@@ -5,6 +5,12 @@ compaction thresholds**. It uses stochastic workloads, explicit token-category
 accounting, an exact first-passage control, and paired Monte Carlo comparisons.
 It does not optimize task quality or claim a universal threshold.
 
+New research milestone: [mandatory restoration synthesis](docs/research/mandatory-reload-synthesis.md)
+connects four production systems, community incidents, seven selected papers,
+six mathematical tools, a full public TraceLab usage profile, and exact/Monte
+Carlo first-use probes. It selects a hybrid working-set model for the next
+implementation; it does not silently change the packaged aggregate simulator.
+
 ## Research question
 
 When does paying for compression, cache reconstruction, and document recovery

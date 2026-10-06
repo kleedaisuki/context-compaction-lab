@@ -37,7 +37,7 @@ select = ["E", "F", "I"]
 packages = ["src/context_compaction_lab"]
 
 [tool.hatch.build.targets.sdist]
-include = ["/src", "/docs", "/tests", "/README.md", "/pyproject.toml", "/uv.lock"]
+include = ["/src", "/docs", "/tests", "/experiments", "/README.md", "/pyproject.toml", "/uv.lock"]
 
 [build-system]
 requires = ["hatchling"]

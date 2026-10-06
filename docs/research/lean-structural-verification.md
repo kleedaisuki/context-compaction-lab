@@ -4,7 +4,7 @@ Date: 2026-10-06. Maintained source: `formal/Structural.lean`.
 
 ## What was actually verified
 
-Lean 4.33.1 checked 21 theorem declarations (18 structural/results laws and three finite-sum helpers) against its kernel. The file imports
+Lean 4.33.1 checked 22 theorem declarations (19 structural/results laws and three finite-sum helpers) against its kernel. The file imports
 only `Std`, without Mathlib, custom axioms, admitted proofs, or unsafe evaluation
 as a proof substitute. Two deterministic fixture inequalities use `decide`, whose
 finite computation produces kernel-checked proof terms.
@@ -56,6 +56,7 @@ a purported fixed-policy derivative.
 | `same_cell_ledger` | Two rational triggers in the same cell return the identical ledger. | Exact schedule equivalence, not merely statistically indistinguishable costs. |
 | `tree_cell_invoice` | Equivalent cell ledgers have the same invoice at every price. | In-cell price differences are identically zero. |
 | `expected_tree_cell` | The weighted expected ledger is also constant in a cell for any fixed finite task law. | No independence or iid hypothesis is necessary. |
+| `approximation_optimization_transfer` | Uniform surrogate error <= epsilon implies a surrogate minimizer has exact regret <= 2 epsilon. | Continuous or simplified models can guide the original optimization when an actual uniform error bound is supplied. |
 | `strict_obstruction` | Every finite number of strict housekeeping steps fails to reach execution if restored size >= trigger. | A threshold can be infeasible independently of prices or request counts. |
 | `threshold_not_decreasing` | Six-action fixture cost at h=3 is lower than at h=4. | Increasing the threshold is not universally cost-improving. |
 | `threshold_not_increasing` | The same cost at h=3 is lower than at h=2. | Nor is decreasing it universally cost-improving. |
@@ -114,6 +115,39 @@ separate standard integration argument, not a theorem checked in this finite fil
 No claim is made that the Python simulator has been mechanically translated into
 this tree representation. The theorem verifies a broad finite threshold-program
 abstraction with clearly stated interface assumptions, not simulator refinement.
+## Uniform approximation and optimization transfer
+
+The discrete threshold theorem is not an argument against continuous distributions
+or continuous analysis. A physically finite system may admit a useful continuous
+approximation. The relevant mathematical obligation is to control approximation
+error sufficiently to transfer the resulting decision back to the exact system.
+
+`approximation_optimization_transfer` handles arbitrary candidate type alpha and
+arbitrary nonnegative cost functions E (exact) and A (approximate). Suppose, for
+every candidate x, the two-sided uniform error assumptions are
+
+```
+E(x) <= A(x) + epsilon,    A(x) <= E(x) + epsilon.
+```
+
+If chosen minimizes A over the same candidate domain, Lean proves, for every y,
+
+```
+E(chosen) <= E(y) + 2*epsilon.
+```
+
+The proof composes E(chosen) <= A(chosen)+epsilon <= A(y)+epsilon <=
+E(y)+2epsilon. It is general cost-map algebra, not a numerical example. Natural
+numbers represent common rational numerator units; division by a common positive
+scale gives the corresponding rational cost bound. The file does not formalize
+real-valued function spaces, absolute values, a continuum limit, or integration.
+
+Crucially, this theorem does **not** establish a uniform epsilon for the simulator,
+a diffusion approximation, a smoothed threshold objective, or a fluid control
+model. It says what a successfully established error bound would buy: an explicit
+original-system regret guarantee rather than an imagined surrogate optimum. The
+candidate sets must coincide; discretizing or projecting a continuous minimizer
+onto a different feasible set requires a separate additional bound.
 ## Strict-loop theorem: explicit transition assumptions
 
 The abstract controller has three phases: `missing`, `ready`, and `done`.

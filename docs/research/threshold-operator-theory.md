@@ -164,6 +164,14 @@ at nonzero jumps. Thus solving J'(h)=0 in this exact model selects every
 non-boundary interval and does not find an optimum. The meaningful threshold
 object is the SIGNED jump measure or exact adjacent-policy difference.
 
+This is a microscopic statement, not a prohibition on continuous probability
+or macroscopic differentiation. As jump locations become dense and their
+weights vanish, signed derivative measures can converge to a continuous
+density while every microscopic ordinary derivative is zero. The subsequent
+[continuum bridge](continuum-bridge-theory.md) supplies finite approximation,
+boundary-stability and optimization-regret conditions rather than stopping
+at exact discreteness.
+
 `structural_symbolics.py` instantiates this using actual simulator ledgers and
 exact rational path weights. Its finite-support Dirac formula is symbolic.
 Lean checks the rational-cell gate equivalence and its lift to arbitrary
@@ -265,5 +273,6 @@ independent endpoint/tail verifier checks 2,196 rational inequalities against
 all 122 extracted price lines across all nine lower-envelope intervals.
 Those inequalities certify the ENTIRE nonnegative read/write ratio axis in
 that declared candidate family, rather than just its sampled price points.
-The 21 Lean declarations were rechecked by the installed 4.33.1 kernel.
-Full regression result after integration: 325 Python tests pass; Ruff passes.
+The initial 21 Lean declarations were rechecked by the installed 4.33.1 kernel;
+the continuum bridge adds a 22nd approximation-to-optimization transfer law.
+Initial structural integration: 325 Python tests passed; Ruff passed.

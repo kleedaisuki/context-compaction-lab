@@ -5,6 +5,26 @@ compaction thresholds**. It uses stochastic workloads, explicit token-category
 accounting, an exact first-passage control, and paired Monte Carlo comparisons.
 It does not optimize task quality or claim a universal threshold.
 
+## Continuum bridge: finite systems do not prohibit continuous analysis
+
+Exact integer accounting is a microscopic reference, not the research endpoint.
+The [continuum bridge](docs/research/continuum-bridge-theory.md) explains finite
+approximation bounds, derivative-measure limits, decision-boundary coupling,
+and the transfer from uniform surrogate error to original decision regret.
+Continuous state models retain essential file/reset jumps and discrete contracts.
+
+The [executed continuum analysis](docs/research/continuum-symbolic-results.md)
+uses exact original ledger curves to derive Gaussian whole-task budget
+responses, local bias bounds, and a separately declared lattice-to-continuum
+limit. Randomizing a whole-task budget is not resampling each request's gate,
+nor proof that a smoothed minimum solves the original deterministic problem.
+
+```powershell
+uv run python experiments/structural_symbolic_analysis.py  # Prepare exact source curves.
+uv run python experiments/continuum_threshold_analysis.py
+./formal/verify.ps1  # Includes the uniform approximation -> 2*epsilon regret law.
+```
+
 ## v0.3 theory-first structural analysis
 
 The research foundation is now an arbitrary joint conditional history law,

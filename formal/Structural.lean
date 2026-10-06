@@ -208,6 +208,24 @@ theorem expected_tree_cell {α : Type} (xs : List α) (w : α → Nat)
     funext x
     exact tree_cell_ledger (trees x) num den k positiveDen lower upper
   rw [functionsEqual]
+/-- Uniform two-sided surrogate error transfers approximate optimality to exact regret.
+Costs and error use common nonnegative rational numerator units. This theorem does
+not establish the approximation error for any particular context model. -/
+theorem approximation_optimization_transfer {α : Type}
+    (exactCost approximateCost : α → Nat) (error : Nat) (chosen : α)
+    (exactUpper : ∀ x, exactCost x ≤ approximateCost x + error)
+    (approximateUpper : ∀ x, approximateCost x ≤ exactCost x + error)
+    (chosenOptimal : ∀ x, approximateCost chosen ≤ approximateCost x) :
+    ∀ y, exactCost chosen ≤ exactCost y + 2 * error := by
+  intro y
+  have first := exactUpper chosen
+  have second := chosenOptimal y
+  have third := approximateUpper y
+  calc
+    exactCost chosen ≤ approximateCost chosen + error := first
+    _ ≤ approximateCost y + error := Nat.add_le_add_right second error
+    _ ≤ (exactCost y + error) + error := Nat.add_le_add_right third error
+    _ = exactCost y + 2 * error := by simp [Nat.two_mul, Nat.add_assoc]
 /-- Strict reset controller phases; execution is distinct from prerequisite restoration. -/
 inductive Phase where
   | missing
@@ -271,6 +289,7 @@ theorem threshold_not_increasing : fixtureCost 3 6 0 < fixtureCost 2 6 0 := by d
 #print axioms same_cell_ledger
 #print axioms tree_cell_invoice
 #print axioms expected_tree_cell
+#print axioms approximation_optimization_transfer
 #print axioms strict_obstruction
 #print axioms threshold_not_decreasing
 #print axioms threshold_not_increasing

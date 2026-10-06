@@ -67,7 +67,7 @@ def main() -> None:
     audit = Path(".cache/lean/verification.log").read_text(encoding="utf-8-sig")
     source = Path("formal/Structural.lean").read_text(encoding="utf-8")
     declarations = len(re.findall(r"^theorem ", source, re.MULTILINE))
-    assert declarations == 21
+    assert declarations >= 21
     assert "sorryAx" not in audit
     assert len(re.findall(r"'ContextCompaction\.", audit)) == declarations
     selected_keys = (

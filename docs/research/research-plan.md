@@ -1,5 +1,16 @@
 # Research plan: expected invoice-optimal compaction thresholds
 
+## Continuum bridge extension (2026-10-06)
+
+Exact integer structure must not be used to dismiss continuous probability
+or macroscopic sensitivity. See continuum-bridge-theory.md and
+continuum-symbolic-results.md for finite resolution, Gaussian budget-response
+identities, boundary-coupling error bounds and scale/atom diagnostics.
+Lean's new uniform approximation-to-optimization transfer theorem gives a
+2*epsilon regret guarantee when the actual model error is established.
+It does not invent that error bound for the calibrated model. Continuous
+state models preserve essential restore/reset jumps and tool contracts.
+
 ## Structural theory milestone (v0.3, 2026-10-06)
 
 The primary deliverable is now exact joint-law control structure rather than

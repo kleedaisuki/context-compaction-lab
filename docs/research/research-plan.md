@@ -1,5 +1,24 @@
 # Research plan: expected invoice-optimal compaction thresholds
 
+## Analytic / community milestone (executed 2026-10-06)
+
+The concentrated mandatory-reconstruction lane now has a distribution-class
+single-crossing theorem, exact renewal closed forms, random-reset and convex-order
+comparative statics, and an explicit four-price crossing-tail correction. Its
+empirical renewal evaluation uses pinned public growth instead of arbitrary
+synthetic distribution families. Matched IID/random-phase blocks, finite-horizon
+independent confirmation, SymPy identities, Lean atomic comparison/lag laws and
+an independent four-category dynamic program are executed. See
+[integrated findings](renewal-community-study.md), [full proof](renewal-analytic-control.md),
+[closed forms](renewal-closed-forms.md), and [portable results](renewal-results.json).
+
+The delivered contribution is a mechanism-conditioned analytical control plus
+evidence about when its approximations matter, not a universal production sweet
+spot. Approximately 113k is one stated reset/price scenario; cache reliability,
+remaining-task horizon and compulsory prefix preservation dominate fine tuning.
+The next high-value research direction is joint conditional growth/restoration/
+cache survival by phase and remaining-work hazard, not another IID noise family.
+
 ## Continuum bridge extension (2026-10-06)
 
 Exact integer structure must not be used to dismiss continuous probability

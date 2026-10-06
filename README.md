@@ -2,8 +2,47 @@
 
 A reproducible research project on **expected API invoice cost versus context
 compaction thresholds**. It uses stochastic workloads, explicit token-category
-accounting, an exact first-passage control, and paired Monte Carlo comparisons.
+accounting, analytic renewal laws, and paired discrete trajectory comparisons.
 It does not optimize task quality or claim a universal threshold.
+
+## Analytic renewal structure and executed community study
+
+The primary new result is **D(L*)=A/c**, where L=H-S is the gap above compulsory
+reconstructed context and D is integrated renewal occupation. It selects the
+optimum in a declared regenerative class, including integer growth/plateaus,
+without inventing a marginal distribution or scanning Monte Carlo thresholds.
+Closed exponential/Erlang/mixture laws, convex-order and growth-scale mechanisms,
+random-reset equations, and four-price crossing-tail corrections are derived.
+
+[The integrated report](docs/research/renewal-community-study.md) then instantiates
+the theory with 297,091 public TraceLab growth observations. Raw IID and intact
+16-action block controls have the same marginal at every action index. Main
+findings: local correlation increases invoice variance much more than it moves
+the minimum; cache reliability and remaining-task horizon dominate microscopic
+threshold tuning. The approximately **113k** analytic line is a conditional
+price/reset scenario, not a production recommendation or population estimate.
+
+Read [the full derivation](docs/research/renewal-analytic-control.md),
+[closed-form analysis](docs/research/renewal-closed-forms.md),
+[community calibration](docs/research/renewal-community-calibration.md),
+[portable results](docs/research/renewal-results.json), and
+[independent method review](docs/research/renewal-study-review.md).
+
+```powershell
+uv sync --locked
+# Download the pinned public trace using the command below, then:
+uv run python experiments/calibrate_renewal_trace.py
+uv run python experiments/renewal_closed_form_derivation.py
+uv run python experiments/finite_continuum_bridge.py
+uv run python experiments/renewal_ledger_crosscheck.py
+uv run python experiments/renewal_community_study.py
+./formal/verify.ps1
+```
+
+Generated raw pools, figures and logs stay in `.cache`. No credentials, model API
+calls or large new parameterized test suite. Existing regression tests protect
+established interfaces; the research contribution is the analytic structure,
+mechanism comparisons and actual source-calibrated findings.
 
 ## Continuum bridge: finite systems do not prohibit continuous analysis
 

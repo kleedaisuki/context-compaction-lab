@@ -2,7 +2,8 @@
 
 This directory contains dependency-free Lean 4 / Std proofs of finite accounting,
 price geometry, occupancy exchange, exact threshold quantization for arbitrary finite
-branch programs, uniform-approximation optimization transfer, and a strict-reset obstruction. It does not
+branch programs, uniform-approximation optimization transfer, renewal-average marginal
+comparison and lag growth, and a strict-reset obstruction. It does not
 formalize the Python simulator or an infinite stochastic process.
 
 Install Lean 4 separately (checked with version 4.33.1), then run from the repository:

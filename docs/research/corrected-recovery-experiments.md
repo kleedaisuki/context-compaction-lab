@@ -120,4 +120,3 @@ The later engineering calibration supersedes these illustrative sizes as the
 CLI default. See engineering-context-evidence.md and
 engineering-calibrated-experiments.md. The experiments below isolate recovery
 dispersion at assumed means; they do not estimate actual project recovery size.
-

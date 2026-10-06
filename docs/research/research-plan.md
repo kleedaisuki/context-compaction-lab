@@ -2,6 +2,13 @@
 
 Recorded 2026-10-06. Mathematical specification: [stochastic-model.md](stochastic-model.md). Historical deterministic calculator: [compaction-threshold-symbolic.md](compaction-threshold-symbolic.md).
 
+Premise refinement in v0.1.1: the main recovery state uses project-specific
+constant or low-dispersion absolute sizes rather than a broad H-proportional
+law. H3 below is a legacy/general sensitivity hypothesis, not the primary
+assumption. The completed fixed versus small-CV study is recorded in
+corrected-recovery-experiments.md; next calibration should estimate retained,
+generated-summary, and reread sizes separately before expanding model scope.
+
 ## Decision and scoped contribution
 
 **Decision:** select an integer-token compact trigger minimizing expected total API invoice for a declared normal-request horizon and workload law. The initial project delivers a reproducible simulation laboratory, an exact stochastic analytic control, uncertainty estimates, and reusable trace-calibration interfaces. It does not claim to know the user's actual traffic distribution.

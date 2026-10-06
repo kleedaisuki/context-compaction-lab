@@ -76,25 +76,50 @@ class RecoverySpec:
     """Model the state recovered after a compaction event.
 
     Attributes:
-        summary_base: Fixed summary output tokens.
-        fraction_mean: Mean Beta-distributed retained fraction of the basis.
-        fraction_concentration: Sum of the Beta shape parameters.
+        summary_base: Fixed generated-summary tokens unless summary is supplied.
+        fraction_mean: Optional legacy Beta fraction of the basis; zero by
+            default so summary length does not grow with the threshold.
+        fraction_concentration: Sum of legacy Beta shape parameters.
         documents: Distribution of reloaded document tokens, newly inserted.
         basis: Use the nominal threshold or the actual crossed context.
             The latter generally induces Markov dependence between cycles.
+        summary: Optional positive distribution overriding summary_base, for
+            tightly concentrated summary-size sensitivity experiments. It
+            cannot be combined with a nonzero proportional fraction.
+        preserved_tokens: Target verbatim old-context tokens retained without
+            generation, capped only by the amount of old context available.
+        surviving_prefix_tokens: Leading preserved tokens with an explicitly
+            valid unchanged cache boundary. Zero is the conservative default;
+            preserving token contents alone does not establish cache reuse.
+        restored_input_tokens: Aggregate non-generated recovered payload when
+            instructions/tools/history/files cannot be separately identified.
+            Mutually exclusive with documents and preserved_tokens to prevent
+            counting an aggregate and its components twice. This is not a
+            measurement of document rereading or a generated-output budget.
     """
 
     summary_base: int = 2_000
-    fraction_mean: float = 0.03
+    fraction_mean: float = 0.0
     fraction_concentration: float = 30.0
-    documents: PositiveSpec = field(
-        default_factory=lambda: PositiveSpec("lognormal", mean=12_000, cv=0.8)
-    )
+    documents: PositiveSpec = field(default_factory=lambda: PositiveSpec("constant", mean=12_000))
     basis: Literal["threshold", "crossed"] = "threshold"
+    summary: PositiveSpec | None = None
+    preserved_tokens: int = 0
+    surviving_prefix_tokens: int = 0
+    restored_input_tokens: int = 0
 
     def __post_init__(self) -> None:
         """Keep retained fractions meaningful without censoring document tails."""
         _validate_integer(self.summary_base, "summary_base")
+        _validate_integer(self.preserved_tokens, "preserved_tokens")
+        _validate_integer(self.surviving_prefix_tokens, "surviving_prefix_tokens")
+        _validate_integer(self.restored_input_tokens, "restored_input_tokens")
+        if self.restored_input_tokens and (self.documents.mean or self.preserved_tokens):
+            raise ValueError("Aggregate restored input cannot overlap documents or preservation.")
+        if self.surviving_prefix_tokens > self.preserved_tokens:
+            raise ValueError("A surviving prefix must be part of verbatim preserved context.")
+        if self.summary is not None and self.fraction_mean != 0:
+            raise ValueError("Distributed summary and proportional summary are alternative laws.")
         if not 0 <= self.fraction_mean <= 1:
             raise ValueError("Invalid summary size or retained fraction.")
         if not math.isfinite(self.fraction_concentration) or self.fraction_concentration <= 0:
@@ -160,6 +185,9 @@ class Workload:
             raise ValueError("TTL must be positive and finite, or None.")
         if not math.isfinite(self.compaction_fixed_usd) or self.compaction_fixed_usd < 0:
             raise ValueError("Fixed compaction overhead must be nonnegative and finite.")
+        surviving = self.recovery.surviving_prefix_tokens
+        if 0 < surviving < self.minimum_cache_tokens:
+            raise ValueError("The declared surviving boundary must meet the cache minimum.")
 
     def to_dict(self) -> dict[str, object]:
         """Return JSON-compatible assumptions with explicit price units."""

@@ -4,6 +4,13 @@ Recorded on 2026-10-06. These results describe the declared stochastic model,
 not a measured production workload or a universal compaction recommendation.
 The primary deliverable is a reproducible expected-cost research laboratory.
 
+Historical v0.1 report, source commit a8c38676cc5aad4e7e32bfb2033603367703df17.
+Version 0.1.1 replaces the default recovery law with fixed/narrow absolute
+sizes following user workload feedback. The commands below refer to that
+historical source snapshot; current --scenario legacy reproduces its baseline
+law explicitly. Do not carry this report's threshold region into the revised
+model. See recovery-premise-refinement.md and the corrected recovery report.
+
 ## Experimental design
 
 Each discovery experiment uses 4,096 independent trajectories and 400 normal
@@ -81,6 +88,35 @@ and magnitude depend on finite-difference step. Intervals exclude smoothing
 bias and cannot establish an exact derivative of the token-rounded objective.
 
 ## Interpretation
+
+### Holdout invoice decomposition added for the user briefing
+
+The confirmation trajectories were reproduced at the already-selected policies
+using seed 20261007 and 4,096 replicates. Their means exactly matched the
+published confirmation estimates. The four disjoint token-category charges are:
+
+| Scenario | Uncached input USD | Cache writes USD | Cache reads USD | Output USD | Mean compactions | Normal cache miss fraction |
+| --- | --- | --- | --- | --- | --- | --- |
+| Baseline, h=40k | 0.416936 | 6.356514 | 3.075195 | 4.415193 | 29.557129 | 0.119404 |
+| Constant growth/gaps, h=45k | 0.201714 | 4.416972 | 3.587176 | 4.284664 | 25.538330 | 0.063846 |
+| Burst growth, h=35k | 0.516787 | 6.178325 | 2.719633 | 4.501669 | 32.867432 | 0.127422 |
+| Long gaps, h=26k | 2.020428 | 14.128720 | 1.501522 | 5.386989 | 57.321045 | 0.445908 |
+
+Normal misses include cold rebuilt prefixes after compaction as well as expiry;
+they are not an expiry-only statistic. Outputs include both ordinary outputs
+and generated summaries. Cache writes are approximately 45% of baseline cost
+and 61% of long-gap cost, so eliminating read tokens alone is not the dominant
+economic mechanism in those two configurations. The long-gap case incurs more
+compactions at its selected policy and more cold writes; its smaller read bill
+does not imply lower total price. The local reproduction probe is
+.temp/report_breakdown.py and its generated data .cache/experiments/holdout-breakdown.json.
+
+For a controlled idealized comparison, the earlier affine-cost parameters
+s=20,000, g=2,000, k0=0.05, k1=p_r, and the same read/write prices give an exact
+exponential-growth stationary threshold 58,873.789483, compared with
+60,824.829046 from deterministic mean substitution. This isolates the stochastic
+overshoot correction in the analytical benchmark. Neither is the 40k result
+of the full simulator, which uses different recovery and overhead assumptions.
 
 The scientific contribution at this stage is separating stochastic first
 passage, state recovery, and cache expiry into an auditable invoice model.

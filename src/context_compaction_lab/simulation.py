@@ -20,14 +20,16 @@ class RandomField:
 
     All arrays have shape ``(replicates, calls)``. Growth and documents are
     integer-valued token counts; gaps are nonnegative seconds, with first gap
-    zero; recovery_fractions lie in [0, 1]. Construction copies caller arrays,
-    so callers can safely reuse a field across threshold policies.
+    zero; recovery_fractions lie in [0, 1]. Optional summary_tokens are absolute
+    generated lengths, not retained fractions. Construction copies caller
+    arrays, so callers can safely reuse a field across threshold policies.
     """
 
     growth: Array
     gaps: Array
     recovery_fractions: Array
     documents: Array
+    summary_tokens: Array | None = None
 
     def __post_init__(self) -> None:
         """Validate marks and take immutable owned copies without tail clipping."""
@@ -51,6 +53,14 @@ class RandomField:
             # Bytes-backed storage cannot have its writeable flag re-enabled.
             frozen = np.frombuffer(value.tobytes(), dtype=np.float64).reshape(shape)
             object.__setattr__(self, name, frozen)
+        if self.summary_tokens is not None:
+            summary = np.array(self.summary_tokens, dtype=np.float64, copy=True)
+            if summary.shape != shape or not np.all(np.isfinite(summary)):
+                raise ValueError("Summary marks must have the same shape and be finite.")
+            if np.any(summary < 0) or np.any(summary != np.rint(summary)):
+                raise ValueError("Summary marks must be nonnegative integer token counts.")
+            frozen = np.frombuffer(summary.tobytes(), dtype=np.float64).reshape(shape)
+            object.__setattr__(self, "summary_tokens", frozen)
 
 
 @dataclass(frozen=True)
@@ -99,7 +109,12 @@ def draw_random_field(workload: Workload, replicates: int, seed: int) -> RandomF
         concentration = recovery.fraction_concentration
         fractions = rng.beta(mean * concentration, (1 - mean) * concentration, shape)
     documents = np.rint(sample_positive(recovery.documents, rng, shape))
-    return RandomField(growth, gaps, fractions, documents)
+    summaries = (
+        np.rint(sample_positive(recovery.summary, rng, shape))
+        if recovery.summary is not None
+        else None
+    )
+    return RandomField(growth, gaps, fractions, documents, summaries)
 
 
 def simulate(workload: Workload, threshold: float, random_field: RandomField) -> SimulationResult:
@@ -114,6 +129,8 @@ def simulate(workload: Workload, threshold: float, random_field: RandomField) ->
         raise ValueError("Threshold must be positive (positive infinity is allowed).")
     if random_field.growth.shape[1] != workload.calls:
         raise ValueError("Random-field call dimension must match workload.calls.")
+    if workload.recovery.summary is not None and random_field.summary_tokens is None:
+        raise ValueError("The distributed-summary workload requires explicit summary marks.")
     size = random_field.growth.shape[0]
     context = np.full(size, workload.initial_context, dtype=np.float64)
     eligible_start = workload.warm_start and (
@@ -131,14 +148,25 @@ def simulate(workload: Workload, threshold: float, random_field: RandomField) ->
             reads[reset] += prefix[reset]
             inputs[reset] += context[reset] - prefix[reset]
             inputs[reset] += workload.compaction_instruction_tokens
-            basis = threshold if workload.recovery.basis == "threshold" else context[reset]
-            summary = np.rint(
-                workload.recovery.summary_base
-                + random_field.recovery_fractions[reset, call] * basis
+            recovery = workload.recovery
+            basis = threshold if recovery.basis == "threshold" else context[reset]
+            summary = (
+                random_field.summary_tokens[reset, call]
+                if recovery.summary is not None
+                else np.rint(
+                    recovery.summary_base + random_field.recovery_fractions[reset, call] * basis
+                )
             )
+            # Verbatim preservation is not generated output. Only an actual
+            # unchanged, warm leading boundary may survive the replacement.
+            preserved = np.minimum(recovery.preserved_tokens, context[reset])
+            surviving = np.minimum(prefix[reset], recovery.surviving_prefix_tokens)
             outputs[reset] += summary
-            context[reset] = summary + random_field.documents[reset, call]
-            prefix[reset] = 0
+            context[reset] = (
+                preserved + summary + random_field.documents[reset, call]
+                + recovery.restored_input_tokens
+            )
+            prefix[reset] = surviving
             compactions[reset] += 1
             overshoots[reset] += context[reset] > threshold
             maximum = np.maximum(maximum, context)

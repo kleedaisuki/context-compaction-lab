@@ -21,6 +21,14 @@ Initial first-call gap is zero. Beta fractions are constant at endpoints 0 or
 All random-field arrays are immutable by contract and simulator must not
 mutate them. Current initial implementation assumes independent marginals.
 
+Optional summary_tokens marks represent absolute generated-summary lengths.
+They are required when RecoverySpec.summary is supplied; old four-array
+RandomField constructors remain valid for the fixed/legacy summary formula.
+The main model uses fraction_mean=0, a fixed 2,000-token summary and a fixed
+12,000-token document load. --recovery-cv enables small, threshold-independent
+variation around these sizes; legacy proportional recovery is an explicit
+historical control rather than the default.
+
 ## Normal request ledger
 
 State per replicate: retained tokens X and available cached prefix P. Initially
@@ -44,18 +52,32 @@ or bills all X plus instructions as uncached on a miss. Do not write old
 context: the compressor's varying suffix is not selected for caching. Bill
 generated summary tokens and optional fixed non-token overhead.
 
-Summary tokens = round(summary_base + fraction*basis), where basis is either
-the nominal threshold or actual X. New X = summary + sampled document tokens.
-Set P=0: this branch-specific prefix has changed and must be rebuilt on the
-normal request. Document insertion is billed there, not twice on compaction.
+Without an absolute-summary law, generated summary = round(summary_base +
+fraction*basis), where the default fraction is exactly zero. An explicit
+absolute-summary law instead consumes its summary_tokens marks and cannot be
+combined with a nonzero proportional fraction.
+
+Preserved L=min(preserved_tokens,old X) is verbatim context, not generated output.
+New X = L + generated summary + sampled document tokens. The only availability
+cap applies to copying existing context, never to distribution tails. Unless
+an eligible unchanged cache boundary has explicitly been declared, set P=0.
+If declared, new P=min(old warm P,surviving_prefix_tokens), which must be part
+of L. Expired entries remain cold. The next normal request reads that surviving
+prefix and writes the rest; document insertion is billed there, not twice.
 
 Recovery may exceed threshold. Record that event; do not silently cap it.
 At most one compaction precedes each ordinary request, so recovery overshoot
 cannot cause an infinite reset loop. No compaction occurs after the final
 ordinary request. An infinite-threshold policy means no compaction.
 
-The cache is a branch-specific matching prefix. Stable system content is
-omitted. Compaction summaries are outputs, reloaded documents are inputs;
+The cache is a branch-specific matching prefix. Historical split controls omit
+global system content; the engineering aggregate includes it without identifying
+its share. An explicitly known unchanged boundary inside preserved context can
+be retained. Aggregate restored_input_tokens is exclusive with nonzero documents
+or preserved_tokens to prevent double counting. Recovery is L+C+D+A, where A is
+the unidentified non-generated aggregate when split components are unavailable.
+The aggregate is fixed and cold, not output and not a documents-only statistic.
+Compaction summaries are outputs, preserved messages and reloaded documents are inputs;
 normal generated output is newly processed on the next request. TTL tests
 use request-start gaps that already incorporate normal generation and tools.
 Post-compaction recovery duration cannot salvage the invalidated prefix.

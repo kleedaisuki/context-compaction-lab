@@ -12,6 +12,7 @@ def test_small_sweep_emits_reproducible_manifest(tmp_path) -> None:
     main(
         [
             "sweep",
+            "--scenario", "baseline",
             "--calls",
             "8",
             "--replicates",
@@ -52,3 +53,52 @@ def test_invalid_threshold_grid_fails(tmp_path) -> None:
     """Malformed grids are rejected before simulation or output writes."""
     with pytest.raises(SystemExit):
         main(["sweep", "--thresholds", "0:30000:5000", "--output", str(tmp_path)])
+
+
+def test_narrow_recovery_is_explicit_in_manifest(tmp_path) -> None:
+    """The CLI exposes concentrated absolute recovery, not hidden H-proportional output."""
+    main(
+        [
+            "sweep",
+            "--scenario", "baseline",
+            "--calls",
+            "3",
+            "--replicates",
+            "8",
+            "--thresholds",
+            "25000:30000:5000",
+            "--recovery-cv",
+            "0.05",
+            "--summary-tokens",
+            "3200",
+            "--output",
+            str(tmp_path),
+        ]
+    )
+    recovery = json.loads((tmp_path / "sweep.json").read_text())["workload"]["recovery"]
+    assert recovery["fraction_mean"] == 0
+    assert recovery["summary"]["mean"] == 3200
+    assert recovery["summary"]["cv"] == 0.05
+    assert recovery["documents"]["cv"] == 0.05
+
+
+def test_legacy_recovery_remains_explicitly_reproducible(tmp_path) -> None:
+    """Existing proportional-summary experiments have a named historical control."""
+    main(
+        [
+            "sweep",
+            "--scenario",
+            "legacy",
+            "--calls",
+            "3",
+            "--replicates",
+            "8",
+            "--thresholds",
+            "25000:30000:5000",
+            "--output",
+            str(tmp_path),
+        ]
+    )
+    recovery = json.loads((tmp_path / "sweep.json").read_text())["workload"]["recovery"]
+    assert recovery["fraction_mean"] == 0.03
+    assert recovery["documents"]["cv"] == 0.8

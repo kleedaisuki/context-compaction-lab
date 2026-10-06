@@ -2,6 +2,19 @@
 
 Research specification, recorded 2026-10-06. This document supersedes the deterministic interpretation of `compaction-threshold-symbolic.md`; that earlier calculation remains an idealized baseline, not a fitted workload model. Prices below are per token, and all expectations are over a specified workload law, not model-generated prose. The executable v0.1 semantics are specified in [implementation-contract.md](../implementation-contract.md); distinctions from more general theory are explicit below.
 
+Version 0.1.1 corrects the primary recovery premise to fixed or narrowly
+distributed absolute summary and document sizes, with separately accounted
+verbatim preservation. Threshold-proportional recovery below remains a general
+or legacy sensitivity mechanism, not the default workload. An explicitly
+declared unchanged warm prefix can survive; only newly generated summaries are
+compactor output. See corrected-recovery-experiments.md for actual revised runs.
+The subsequent engineering calibration is documented in
+engineering-context-evidence.md. Its full reset includes unidentified fixed
+prompt/tool/history/file components through a non-generated aggregate, rather
+than treating a measured full prompt as a documents-only or generated payload.
+The baseline Python defaults remain compatibility controls; the CLI default is
+the median-anchored engineering scenario, not a fitted empirical law.
+
 ## 1. Question and estimands
 
 For a fixed stream of ordinary task requests, choose a compaction threshold `h` to minimize expected API invoice. Task success, task-per-token, subscription quotas, and endogenous behavior changes are outside this first study. Holding the stream fixed is an experimental intervention, not a claim that real agents behave identically after different summaries.

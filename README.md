@@ -23,8 +23,10 @@ dependent cycles, so the finite-horizon simulator is the primary experiment.
 The initial implementation provides:
 
 - Constant, Gamma, Lognormal, and mean-normalized burst-mixture growth laws.
-- Random request-start intervals, Beta recovery fractions, and positive
-  reloaded-document sizes; no hidden upper-tail clipping.
+- Random request-start intervals and fixed or tightly concentrated absolute
+  summary/document sizes; proportional Beta recovery is a legacy control.
+- Verbatim preservation is separate from generated summaries; a declared
+  unchanged warm cache boundary can survive compaction without a full rewrite.
 - Disjoint uncached-input, cache-write, cache-read, and output billing,
   including generated-output tails, compaction summaries, and cache expiry.
 - Shared random fields across thresholds, expected-cost intervals, paired
@@ -33,9 +35,10 @@ The initial implementation provides:
   descriptive tail diagnostics rather than invalid fitted-sample KS p-values.
 - An exact exponential-growth first-passage benchmark verified by SymPy.
 
-**All bundled workloads are synthetic assumptions, not measured production
-traffic.** Distribution fitting does not validate the joint workload or its
-stationarity. No real model API calls or credentials are required.
+**The default engineering scenario uses published real-workload magnitude
+anchors, not a fitted production distribution.** The other bundled controls
+are entirely synthetic. Distribution fitting does not validate a joint workload
+or its stationarity. No real model API calls or credentials are required.
 
 ## Setup
 
@@ -70,30 +73,79 @@ packages are installed in `.venv`; `src/` is not added through an ad hoc path ha
 
 ```sh
 # Generated JSON, trajectory arrays, and plots stay under .cache/experiments.
+uv run compaction-lab sweep --scenario engineering --replicates 4096 --calls 400
+# Higher-growth sensitivity; the source's growth scale depends on context band.
+uv run compaction-lab sweep --scenario engineering --growth-mean 3200 --output .cache/experiments/engineering-growth-3200
+
+# Historical synthetic controls (not defaults or empirical calibration).
 uv run compaction-lab sweep --scenario baseline --replicates 2048 --calls 400
 uv run compaction-lab sweep --scenario bursty --replicates 2048 --calls 400
 uv run compaction-lab sweep --scenario long-gaps --replicates 2048 --calls 400
 uv run compaction-lab sweep --scenario constant --replicates 2048 --calls 400
 
+# Engineering recovery: 4,382 generated summary + 61,206 aggregate input.
+# The residual is not a measured documents-only quantity.
+uv run compaction-lab sweep --scenario engineering --summary-tokens 4382 --restored-input-tokens 61206
+
+# Synthetic split controls; fixed recovery does not grow with the trigger.
+uv run compaction-lab sweep --scenario baseline --summary-tokens 3200 --documents-mean 12000
+uv run compaction-lab sweep --recovery-cv 0.05 --output .cache/experiments/narrow-recovery
+
+# Keep old messages without counting them as generated output.
+uv run compaction-lab sweep --scenario baseline --preserved-tokens 4000 --summary-tokens 2000
+
+# Only use a surviving prefix when its unchanged eligible cache boundary is known.
+uv run compaction-lab sweep --scenario baseline --preserved-tokens 4000 --surviving-prefix-tokens 4000
+
 # Probe finite-difference bias rather than claiming an exact gradient.
 uv run compaction-lab sweep --difference-step 2000 --output .cache/experiments/step-2000
 
 # Change the conditional recovery mechanism or remove expiry in an ideal control.
-uv run compaction-lab sweep --recovery-basis crossed --output .cache/experiments/crossed
+uv run compaction-lab sweep --scenario legacy --recovery-basis crossed --output .cache/experiments/legacy-crossed
 uv run compaction-lab sweep --no-expiry --output .cache/experiments/no-expiry
 ```
 
-The inclusive default grid is `25000:150000:5000` tokens. Each normal call adds
+The inclusive default grid is `75000:300000:5000` total retained tokens. Each normal call adds
 random retained input and output; the exogenous workload is shared across policy
 comparisons. Compaction occurs at most once before a remaining normal request,
 never as an unnecessary terminal action. An infinite-threshold no-compaction
 baseline is priced separately.
+
+Version 0.1.1 separates generated summaries from non-generated recovery. The
+default CLI `engineering` scenario anchors total reset size at **65,588** and
+generated summary at **4,382** tokens, the separate medians reported across
+873 compactions in a [single-engineer Claude Code case study](https://langwatch.ai/research/finding-the-optimal-context-window).
+The constructed difference **61,206** is aggregate non-summary recovered input,
+not a measured residual median or document volume. Unknown component fields
+are zero placeholders because their volume is included in this aggregate;
+zero does not assert no documents or retained history existed. Do not add a
+system/tools prefix again. Recovery is cold in this explicit scenario, not in
+every real agent. The study's 1,470-token high-context growth scale anchors a
+Gamma control with **unfitted CV 0.8**. Gaps, output fraction, horizon, and prices
+also remain declared controls; medians are not substituted for empirical means.
+See [engineering evidence](docs/research/engineering-context-evidence.md).
+
+The Python `Workload()` and named `baseline` retain the 2k/12k illustrative
+control for compatibility; neither is the CLI's engineering default. A recovery
+CV of 0.05 gives small independent Lognormal summary/document variations where
+those quantities are positive; aggregate restored input remains fixed. This is
+a sensitivity assumption, not an empirically fitted dispersion.
+`--scenario legacy` explicitly restores the old 2,000+Beta*h summary and
+12,000-mean document CV 0.8 so the previous baseline remains reproducible.
+
+All retained tokens are charged when processed as input; only newly generated
+summary tokens incur compactor output charges. Verbatim preservation does not
+automatically imply cache reuse. The surviving-prefix option assumes an
+actually matching, previously eligible leading cache boundary; it is not
+inferred from filenames or token counts.
 
 Each `sweep.json` records workload parameters, prices per token, independent
 replicate count, seeds, Python/package versions, source digest, discovery-grid
 selection, and independent validation. `trajectory-costs.npz` retains paired
 per-trajectory prices for the finite discovery grid. `sweep.png` visualizes
 expected costs and centered secants with pointwise Monte Carlo intervals.
+Engineering reports additionally retain source anchors and the unmeasured
+assumptions separately; overrides change the workload, not the source's claims.
 
 Intervals are conditional on the specified model. They do not include workload
 parameter uncertainty, finite-difference bias, or a simultaneous guarantee for
@@ -161,13 +213,21 @@ API token invoices, not subscription usage quotas. Normal-call count and growth
 are held fixed across policies, so savings are not task-success evidence.
 
 See the [stochastic model](docs/research/stochastic-model.md),
+[engineering evidence](docs/research/engineering-context-evidence.md),
+[engineering-magnitude results](docs/research/engineering-calibrated-experiments.md),
 [research plan](docs/research/research-plan.md), and
 [implementation contract](docs/implementation-contract.md) for assumptions,
 references, hypotheses, and the next calibration/validation steps.
 
 The [initial synthetic experiment report](docs/research/initial-experiments.md)
-records the first 4,096-trajectory studies, their boundary/step-size probes,
-independent confirmation, and limitations.
+records the historical v0.1 high-dispersion studies. Its threshold findings
+must not be applied to the corrected fixed/narrow recovery model.
+
+The [corrected recovery report](docs/research/corrected-recovery-experiments.md)
+records constant versus CV 0.05 controls, preserved-message accounting, and
+independent confirmation. Under the same illustrative prices, the fixed and
+small-noise cost curves are practically close; absolute recovery sizes remain
+unmeasured project parameters rather than a universal recommendation.
 
 No license has been selected yet. Public repository visibility alone is not an
 open-source license grant.

@@ -29,8 +29,9 @@ import sympy as sp
 
 from .analytic import exponential_benchmark, renewal_quotient_derivative
 from .calibration import fit_positive_samples
-from .config import PositiveSpec, Workload
+from .config import PositiveSpec, RecoverySpec, Workload
 from .inference import sweep_thresholds
+from .profiles import engineering_evidence, engineering_workload
 
 
 def _threshold_grid(text: str) -> list[float]:
@@ -44,9 +45,56 @@ def _threshold_grid(text: str) -> list[float]:
     return [float(value) for value in range(start, stop + 1, step)]
 
 
+def _recovery(args: argparse.Namespace, base: RecoverySpec) -> RecoverySpec:
+    """Validate simultaneous overrides atomically, not invalid intermediate states."""
+    changes: dict[str, object] = {"basis": args.recovery_basis}
+    for option, field_name in (
+        ("summary_tokens", "summary_base"),
+        ("preserved_tokens", "preserved_tokens"),
+        ("surviving_prefix_tokens", "surviving_prefix_tokens"),
+        ("restored_input_tokens", "restored_input_tokens"),
+    ):
+        value = getattr(args, option)
+        if value is not None:
+            changes[field_name] = value
+    documents = (
+        replace(base.documents, mean=args.documents_mean)
+        if args.documents_mean is not None else base.documents
+    )
+    if args.recovery_cv is not None:
+        cv = args.recovery_cv
+        if not np.isfinite(cv) or cv < 0:
+            raise ValueError("Recovery CV must be finite and nonnegative.")
+        if args.scenario == "legacy":
+            raise ValueError("Use the corrected scenarios for fixed/narrow recovery sensitivity.")
+        family = "constant" if cv == 0 else "lognormal"
+        summary_mean = changes.get("summary_base", base.summary_base)
+        changes["fraction_mean"] = 0
+        changes["summary"] = PositiveSpec(
+            family if summary_mean else "constant", mean=summary_mean, cv=cv,
+        )
+        documents = PositiveSpec(
+            family if documents.mean else "constant", mean=documents.mean, cv=cv,
+        )
+    changes["documents"] = documents
+    return replace(base, **changes)
+
+
 def _scenario(args: argparse.Namespace) -> Workload:
-    """Build named synthetic controls, never imply empirical calibration."""
-    workload = Workload(calls=args.calls)
+    """Build source-anchored scenarios or named historical synthetic controls."""
+    workload = (
+        engineering_workload(args.calls) if args.scenario == "engineering"
+        else Workload(calls=args.calls)
+    )
+    if args.scenario == "legacy":
+        workload = replace(
+            workload,
+            recovery=RecoverySpec(
+                summary_base=2_000,
+                fraction_mean=0.03,
+                documents=PositiveSpec("lognormal", mean=12_000, cv=0.8),
+            ),
+        )
     if args.scenario == "constant":
         workload = replace(
             workload,
@@ -62,19 +110,16 @@ def _scenario(args: argparse.Namespace) -> Workload:
         if args.growth_cv is not None
         else workload.growth
     )
+    if args.growth_mean is not None:
+        growth = replace(growth, mean=args.growth_mean)
     gaps = (
         replace(workload.gaps, mean=args.gap_mean) if args.gap_mean is not None else workload.gaps
     )
-    recovery = replace(workload.recovery, basis=args.recovery_basis)
-    if args.documents_mean is not None:
-        recovery = replace(
-            recovery, documents=replace(recovery.documents, mean=args.documents_mean)
-        )
     return replace(
         workload,
         growth=growth,
         gaps=gaps,
-        recovery=recovery,
+        recovery=_recovery(args, workload.recovery),
         cache_ttl_seconds=None if args.no_expiry else args.ttl,
     )
 
@@ -121,7 +166,7 @@ def _draw_sweep(report: dict[str, object], output: Path) -> None:
         selected, color="#df8b32", linestyle="--", label="Selected discovery grid point"
     )
     axes[0].set_ylabel("Expected total API price (USD)")
-    axes[0].set_title("Synthetic workload: expectation, not mean-substitution", loc="left")
+    axes[0].set_title("Conditional expected invoice under scenario assumptions", loc="left")
     axes[0].legend(frameon=False)
     axes[1].plot(x, slopes, color="#1c978a", linewidth=2)
     axes[1].fill_between(x, slope_low, slope_high, color="#1c978a", alpha=0.18)
@@ -156,6 +201,9 @@ def _run_sweep(args: argparse.Namespace) -> None:
     )
     report["environment"] = _environment()
     report["scenario_name"] = args.scenario
+    if args.scenario == "engineering":
+        report["engineering_evidence"] = engineering_evidence()
+        report["interpretation"]["data_status"] = "published_median_anchored_scenario_not_trace_fit"
     report["elapsed_seconds"] = time.perf_counter() - started
     destination = args.output or Path(".cache/experiments") / args.scenario
     _save_json(destination / "sweep.json", report)
@@ -219,18 +267,37 @@ def main(argv: list[str] | None = None) -> None:
     commands = parser.add_subparsers(dest="command", required=True)
     sweep = commands.add_parser("sweep", help="Estimate expected total invoice on a grid.")
     sweep.add_argument(
-        "--scenario", choices=("baseline", "constant", "bursty", "long-gaps"), default="baseline"
+        "--scenario",
+        choices=("engineering", "baseline", "constant", "bursty", "long-gaps", "legacy"),
+        default="engineering",
     )
     sweep.add_argument(
-        "--thresholds", type=_threshold_grid, default=_threshold_grid("25000:150000:5000")
+        "--thresholds", type=_threshold_grid, default=_threshold_grid("75000:300000:5000")
     )
     sweep.add_argument("--replicates", type=int, default=2048)
     sweep.add_argument("--calls", type=int, default=400)
     sweep.add_argument("--seed", type=int, default=20261006)
     sweep.add_argument("--difference-step", type=float, default=5000)
     sweep.add_argument("--growth-cv", type=float)
+    sweep.add_argument("--growth-mean", type=float, help="Override retained growth scale per call.")
     sweep.add_argument("--gap-mean", type=float)
     sweep.add_argument("--documents-mean", type=float)
+    sweep.add_argument("--summary-tokens", type=int, help="Fixed generated-summary size.")
+    sweep.add_argument(
+        "--restored-input-tokens", type=int,
+        help="Aggregate non-generated reset payload; exclusive with document/preservation sizes.",
+    )
+    sweep.add_argument("--preserved-tokens", type=int, help="Verbatim retained old-context target.")
+    sweep.add_argument(
+        "--surviving-prefix-tokens",
+        type=int,
+        help="Declared unchanged warm cache boundary inside preserved context.",
+    )
+    sweep.add_argument(
+        "--recovery-cv",
+        type=float,
+        help="Summary/document CV: 0 fixed, e.g. 0.05 narrow; aggregate input stays fixed.",
+    )
     sweep.add_argument("--recovery-basis", choices=("threshold", "crossed"), default="threshold")
     sweep.add_argument("--ttl", type=float, default=300)
     sweep.add_argument("--no-expiry", action="store_true")

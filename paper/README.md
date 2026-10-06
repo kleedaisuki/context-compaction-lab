@@ -25,10 +25,20 @@ and the workload-conditioned importance of reliability, reconstruction and
 remaining work. Related work positions representation, caching, working sets
 and workload characterization around that question.
 
-The main body presents the consequential results and four figures. Appendices
-contain the accounting derivation, proofs, estimation weights and exclusions,
-seeds, numerical verification and artifact mapping. Scope/limitations reside
-in the Discussion rather than recurring disclaimer paragraphs.
+The main body presents the consequential results and connects the aggregate
+renewal lane to separately executed versioned-file restoration experiments.
+The expanded reading copy includes eight figures and detailed experimental
+tables: restoration policies, retention budgets, exact finite controls,
+continuous sensitivities, renewal/horizon contrasts, material interventions
+and all 38 quoted price vectors. Appendices preserve their distinct workloads,
+denominators, design, uncertainty and interpretation, not only reproduction
+commands. Proofs, estimation weights and the evidence map are also included.
+
+Discussion develops the fundamental difference between fixed-action invoice
+cost and verified tasks per billed token/dollar. Its derivations and a proposed
+task-level evaluation design are in a dedicated appendix; no success curve is
+inferred from usage-only traces. The repository link remains in the artifact
+appendix, keeping the main narrative uninterrupted.
 
 The source evidence is the maintained renewal, sensitivity and expanded tariff
 studies in `docs/research`. Figures use their executed numerical artifacts;
@@ -43,10 +53,17 @@ With the pinned public growth pool already prepared:
 ```powershell
 uv sync --locked
 uv run python experiments/build_paper_figures.py
+uv run python experiments/build_paper_exhibits.py
+uv run python experiments/task_efficiency_derivation.py
 uv run python experiments/compile_paper.py
 ```
 
 The figure generator updates only the delimited generated block in the source.
+The exhibit generator uses the maintained aggregate JSON files, including
+`docs/research/paper-supplement-results.json`. This portable supplement exports
+already executed finite/continuum and closed-renewal controls; regenerate it
+with `experiments/export_paper_supplement.py` after running its documented
+input experiments. Rebuilding the paper itself needs no new sampled trajectory.
 It saves complete plotted values and evidence hashes under `.cache/paper`.
 The exporter uses an existing `pdflatex`, performs three reference/float passes,
 and rejects unresolved citations or references. Compiler objects and diagnostic

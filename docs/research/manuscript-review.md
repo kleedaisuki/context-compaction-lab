@@ -7,12 +7,14 @@ review rather than substituting a software test report for the paper.
 ## Argument and selection
 
 The central claim is that compaction amortizes state reconstruction against
-discounted history carrying. The article selects a coherent subset of the
-project: renewal occupation and price phases; cold-tail response; envelope
-and regret geometry; empirical growth, dependence, material paths, horizons
-and tariff classes. The broader finite-state occupation/LP counterexamples,
-earlier working-set prototype and every closed distribution formula are not
-introduced as competing narratives in the main body.
+discounted history carrying. The initial eleven-page article selected renewal
+occupation, price phases, cold-tail response, envelope/regret geometry and
+community/tariff contrasts. Reader feedback exposed overcompression: stateful
+restoration and finite-control findings were reduced to scope sentences and
+experimental appendices mainly recorded methodology. The expanded revision
+restores those results as complementary evidence for the same argument.
+Superseded broad-prior illustrative models remain developmental work, not
+additional empirical evidence.
 
 Introduction motivates the paradox through a coding-agent continuation and
 price-reversal example. Related Work connects prompt representations, cache
@@ -67,7 +69,7 @@ are materialized by `build_paper_figures.py` under `.cache/paper`.
   execution in appendices, four figures, and the specified author/email. It
   uses `acmart` without fabricated ACM venue/acceptance metadata.
 
-## Rendering and reproducibility
+## Initial rendering and reproducibility (eleven-page version)
 
 The native editor was opened but its compiler returned a platform-directory
 initialization error. The already-installed TeX Live 2026 exported the PDF;
@@ -83,3 +85,43 @@ appendix columns are uneven, with no clipping or overlap in the reviewed pages.
 The code environment remains the root uv `.venv`. Compiler objects, logs,
 renders and raw evidence stay in `.cache`; only source and final reading PDF
 are maintained under `paper`. Existing unrelated Lean-IDE edits remain untouched.
+
+## Expanded revision after reader feedback
+
+The reading copy now has 25 pages, eight vector figures, 21 numbered tables,
+13 appendix sections and 27 references. All six main sections remain intact.
+The main evaluation adds the separately measured/controlled versioned-file
+mechanisms. Experimental appendices provide policy matrices, complete horizon
+confirmation, joint retention budgets, exact finite curves, paid batching,
+global price faces, continuum probes, transient closed-law approximation
+errors, marked price/material controls and all 38 quoted vectors.
+
+The mathematical expansion includes the exact demand polynomial/covariance
+derivative, reachable-state Bellman/LP certificate and strict length-only gap,
+CV-only counterexample, random-reset quotient derivation, renewal remainder
+proof and arithmetic-span correction. Discussion alone develops the
+fixed-action-cost versus successful-task-efficiency distinction. Its appendix
+derives pooled ratios, the success-loss boundary, implicit price response and
+fractional-control form, and identifies a success-labeled follow-up as future
+work. No synthetic success curve is presented as empirical evidence.
+
+The evidence index precedes detailed experimental appendices; the public
+repository URL occurs once in the artifact appendix, not in the main narrative.
+Precise coverage and the development-versus-evidence distinction are recorded
+in `manuscript-coverage.md`. Portable exact/control exhibits are in
+`paper-supplement-results.json`, with source hashes and an export script.
+
+Verification: 29 focused tests passed; seven new task-efficiency SymPy
+identities have zero residual. Closed-renewal and finite-continuum derivation
+scripts were rerun successfully. Both presentation generators are idempotent.
+The final three-pass installed-TeX build has no undefined references/citations
+or overflowing boxes. Native compilation was retried and remains unavailable
+with the same platform-directory initialization error. All 25 pages were
+rendered and reviewed, with detailed checks of the changed tables, curves,
+proof displays, Discussion and final artifact pages. The balance package's
+second-column warning is harmless in the visibly balanced final page.
+
+This is an evidence/narrative expansion, not a new community simulation.
+No paid model request, trace resampling, new CI or production-code/dependency
+change was introduced. Initial eleven-page source and PDF remain recoverable
+from Git history.

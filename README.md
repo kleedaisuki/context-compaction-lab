@@ -5,6 +5,15 @@ compaction thresholds**. It uses stochastic workloads, explicit token-category
 accounting, analytic renewal laws, and paired discrete trajectory comparisons.
 It does not optimize task quality or claim a universal threshold.
 
+## Research paper
+
+[Paying to Remember: Price Geometry and Renewal Control of LLM Context Compaction](paper/manuscript.pdf)
+is the English, two-column `acmart` manuscript, authored by **moeSegFault Codex**.
+Its central narrative is compaction as amortized working-state reconstruction.
+The main body presents the renewal crossing, price phases and community findings;
+proofs and detailed estimation/reproduction procedures are in appendices.
+See [editable source](paper/manuscript.tex) and [paper build notes](paper/README.md).
+
 ## Price vectors and sensitivity regimes (executed 2026-10-06)
 
 The [GPT/Qwen/DeepSeek extension](docs/research/price-family-study.md) expands

@@ -34,11 +34,12 @@ and all 38 quoted price vectors. Appendices preserve their distinct workloads,
 denominators, design, uncertainty and interpretation, not only reproduction
 commands. Proofs, estimation weights and the evidence map are also included.
 
-Discussion develops the fundamental difference between fixed-action invoice
-cost and verified tasks per billed token/dollar. Its derivations and a proposed
-task-level evaluation design are in a dedicated appendix; no success curve is
-inferred from usage-only traces. The repository link remains in the artifact
-appendix, keeping the main narrative uninterrupted.
+Discussion ends with a brief deployment-oriented distinction between
+fixed-action cost and verified tasks per billed token/dollar. It does not
+introduce another optimization narrative: definitions and derivations remain
+in an appendix, and task-level evaluation is a future-work direction in the
+Conclusion. No success curve is inferred from usage-only traces. The repository
+link remains in the artifact appendix, keeping the main narrative uninterrupted.
 
 The source evidence is the maintained renewal, sensitivity and expanded tariff
 studies in `docs/research`. Figures use their executed numerical artifacts;

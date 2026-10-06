@@ -2320,83 +2320,6 @@ concrete, while the price-envelope identity continues to provide resource
 attribution for any fixed policy. Estimating phase-conditioned occupations
 is more informative here than fitting several independent noise distributions.
 
-\subsection{From cheaper continuation to completed tasks}
-\label{sec:task-efficiency}
-
-The fundamental objective question is not whether a shorter context can lower
-an invoice, but whether the saved resources still buy a completed task. The
-experiments fix ordinary work and its exogenous observations. Finishing 400
-simulated actions establishes ledger completion, not that a coding agent has
-fixed an issue. An agent can cheaply repeat actions, lose an obligation in a
-summary, or stop without a valid patch. Conversely, reconstruction can be
-expensive but necessary for a correct solution. This distinction changes the
-optimization target, not just the width of an uncertainty interval.
-
-For a fixed task population and evaluation contract, let $Y_\pi\in\{0,1\}$
-indicate externally verified success, $\boldsymbol{\ell}_\pi$ the random
-four-category usage over the entire attempt, and $Z_\pi=\mathbf1^\top
-\boldsymbol{\ell}_\pi$ the total billed tokens. Failed attempts, recovery
-requests, summaries and retries remain in the denominator. The operational
-efficiencies are
-\begin{equation}
-\eta_T(\pi)=\frac{\E Y_\pi}{\E Z_\pi},\qquad
-\eta_{\$}(\pi)=\frac{\E Y_\pi}
- {\pp^\top\E\boldsymbol{\ell}_\pi}.
-\label{eq:task-efficiency}
-\end{equation}
-They are completed tasks per billed token and per dollar, respectively.
-With repeated identically distributed attempts and suitable integrability,
-total successes divided by total resources converges to these ratios of
-expectations. Averaging individual $Y/Z$ ratios instead gives a different
-weighting, while averaging tokens only over successful runs omits the price
-of failure. The task distribution must remain fixed: replacing difficult
-issues with easy ones can improve the ratio without improving the agent.
-
-Token efficiency and dollar efficiency answer related but distinct questions.
-One cache-read token and one generated token contribute equally to $Z$ but
-have different prices. Both should be reported alongside success rate and
-the category ledger. Execution-based benchmarks such as SWE-bench anchor
-success in an accepted patch and tests~\cite{swebench}; ordinary-call counts
-cannot stand in for that contract. Long-context retrieval evidence also shows
-that retaining more text does not monotonically improve use of relevant
-information~\cite{lostmiddle}. Shortening may reduce distraction, or it may
-remove the precise fact needed later. The relevant mechanism is information
-availability and use, not length alone.
-
-This yields a sharp decision boundary. For policies $A,B$ with positive
-success probabilities $s_A,s_B$ and expected bills $C_A,C_B$, a cheaper
-$A$ is less dollar-efficient whenever
-\begin{equation}
-\frac{s_A}{s_B}<\frac{C_A}{C_B}.
-\label{eq:success-boundary}
-\end{equation}
-A 20\% bill saving can tolerate at most a 20\% \emph{relative} success loss
-before losing throughput; the corresponding token boundary replaces $C$
-by $\E Z$. This is an algebraic trade-off, not an estimated quality curve
-for our community pool. Because that pool supplies usage without
-policy-intervention success labels, it identifies the resource side of this
-boundary, not the full task-efficiency optimum.
-
-There are two practical next objectives. A reliability-sensitive workflow
-minimizes $\pp^\top\E\boldsymbol{\ell}_\pi$ subject to
-$\E Y_\pi\ge\tau$, for a declared success floor $\tau$.
-A throughput-sensitive workflow maximizes $\eta_T$ or $\eta_{\$}$ and
-reports the resulting success level. Ratio optimization has a useful
-fractional-programming form~\cite{dinkelbach}: at the optimal dollar
-efficiency $\lambda$, the best policy satisfies
-\begin{equation}
-\max_\pi\{\E Y_\pi-\lambda\pp^\top
-                  \E\boldsymbol{\ell}_\pi\}=0.
-\label{eq:task-fractional}
-\end{equation}
-The threshold responds to both resource and success gradients; a cost-only
-stationary point is generally not a task-efficiency stationary point.
-Appendix~\ref{app:task-efficiency} derives these statements and a task-level
-measurement design. The present cost geometry remains a component of that
-larger problem: it attributes the invoice and identifies which mechanisms
-deserve intervention, while the successful-task frontier decides whether an
-economical state is actually useful.
-
 \subsection{Length is a useful reduction, not a sufficient state}
 
 The restoration experiments suggest an adaptive-control boundary with an
@@ -2450,6 +2373,25 @@ discrepancy. Real service comparisons additionally require model-specific
 tokenization, cache eligibility, latency, and output behavior. These extensions
 preserve the fixed-policy price geometry but can change the threshold balance.
 
+\subsection{Task efficiency as a deployment criterion}
+\label{sec:task-efficiency}
+
+The cost optimum is conditional on the ordinary work being held fixed.
+It is therefore a resource decision, not a direct measure of task completion.
+A shorter context may lower the bill while losing a fact or obligation needed
+for a correct result; additional history can also distract rather than help
+retrieval~\cite{lostmiddle}. The useful operating point depends on what
+information the representation preserves, not length alone.
+
+For deployment, completed tasks per billed token and per dollar should
+complement the invoice curves. Both require a fixed task population,
+externally checked outcomes, and resource accounting that includes failed
+attempts and recovery. Token and dollar efficiency can differ because cached
+reads and generated output have different prices. Our analysis supplies the
+resource side of that comparison; evaluating the success response is a
+task-level extension. Appendix~\ref{app:task-efficiency} records the ratio
+definitions and their basic implications for that extension.
+
 \section{Conclusion}
 \label{sec:conclusion}
 
@@ -2464,10 +2406,18 @@ can favor postponement even when steady operation favors cycling.
 
 The next step is to estimate the joint law of eligible-prefix length, cache
 age, restoration demand, and remaining work, then use it to choose when and
-what to reconstruct. Request-band prices and task utility can be incorporated
-at that state level. The present analysis provides the organizing principle:
-preserve the distinction between information available to the agent,
-computation reusable by the service, and work left to amortize the next reset.
+what to reconstruct. Request-band prices can be incorporated at that state
+level. The organizing principle remains to distinguish information available
+to the agent, computation reusable by the service, and work left to amortize
+the next reset.
+
+A further task-level study should pair compact policies on the same coding
+issues and evaluate accepted solutions with an execution-based contract,
+such as SWE-bench's test-based resolution criterion~\cite{swebench}.
+Reporting success together with all billed tokens and expense would show
+whether economical reconstruction also improves completed tasks per resource.
+This extends the cost analysis without substituting request counts for
+useful work.
 
 \begin{acks}
 We thank the UW SyFI TraceLab authors for releasing the public coding-agent
@@ -3764,6 +3714,15 @@ Within-attempt cost and success may be dependent. Adaptive retry behavior
 after failure requires a different joint policy, not this fixed-attempt
 recurrence.
 
+The corresponding efficiencies are
+\begin{equation}
+\eta_T(\pi)=\frac{\E Y_\pi}{\E T_\pi},\qquad
+\eta_{\$}(\pi)=\frac{\E Y_\pi}{\pp^\top\E\boldsymbol\ell_\pi}.
+\label{eq:task-efficiency}
+\end{equation}
+Subscripts identify the policy's whole-attempt quantities, rather than
+separate successful-only resource totals.
+
 \subsection{Cost ranking and efficiency sensitivity}
 For positive expected resource $r(H)$ and success $s(H)$,
 \begin{equation}
@@ -3772,9 +3731,18 @@ For positive expected resource $r(H)$ and success $s(H)$,
 \end{equation}
 at a positive-success smooth interior optimum. A cost-only point with
 $C'=0$ has dollar-efficiency slope $s'/C$; it is stationary only if
-$s'=0$. Cross multiplication of two positive ratios proves the
-success-loss boundary in Discussion. A cheaper policy can lose useful
-throughput without contradicting any invoice calculation.
+$s'=0$. For policies $A,B$ with positive success and expected bills,
+cross multiplication gives
+\begin{equation}
+\eta_{\$}(A)<\eta_{\$}(B)
+\quad\Longleftrightarrow\quad
+\frac{s_A}{s_B}<\frac{C_A}{C_B}.
+\label{eq:success-boundary}
+\end{equation}
+For example, a 20\% bill saving tolerates at most a 20\% relative success
+loss before throughput declines. This is an algebraic boundary, not an
+estimated success curve. The token version replaces expected bill by
+expected billed tokens.
 
 Assume policy-indexed $s(H)$ and $\Mvec(H)$ are explicitly independent
 of prices. For $C(H,\pp)=\pp^\top\Mvec(H)$, set $F=s'C-sC'$.
@@ -3800,6 +3768,12 @@ optimizer. Conversely, an attained zero maximum of that difference
 identifies a ratio optimizer. General families require supremum and
 attainment/boundedness conditions. This is the standard
 fractional-programming reduction~\cite{dinkelbach}.
+
+Equivalently, the attained optimum satisfies
+\begin{equation}
+\max_\pi\{s_\pi-\lambda_*\pp^\top\E\boldsymbol\ell_\pi\}=0.
+\label{eq:task-fractional}
+\end{equation}
 
 In a finite observed-state task model, terminal reward is verified success
 and stage reward is $-\lambda\pp^\top\Mvec_n(s,a)$:
@@ -3889,12 +3863,10 @@ are kept distinct from independent confirmation.
 \subsection{Reusable artifacts}
 The public implementation and numerical artifacts are available at
 \url{https://github.com/kleedaisuki/context-compaction-lab}.
-Portable result files reside in \texttt{docs/research}. The expanded tariff
-study retains all 35 earlier analytical scenarios exactly.
-Its 143 cases include 38 vectors at
-three $q$ values and 29 retained mechanism controls. Figures in this paper
-are generated from those artifacts and the pinned empirical pool, with
-embedded plot coordinates for standalone compilation.
+Table~\ref{tab:artifact-map} indexes the maintained aggregates and runners.
+The standalone exhibits embed coordinates from executed artifacts and the
+pinned empirical pool. With that pool prepared, use the commands below;
+run the wrapped tariff command as one line.
 
 
 
@@ -3909,12 +3881,5 @@ uv run python experiments/price_family_crosscheck.py
 uv run python experiments/build_paper_figures.py
 uv run python experiments/build_paper_exhibits.py
 \end{verbatim}
-The task-efficiency symbolic runner is listed in Table~\ref{tab:artifact-map}.
-The multi-line tariff command is shown wrapped for readability and is run
-as one shell command. The trace must first be downloaded using the pinned
-release URL and checksum documented by the calibration script. Generated
-raw pools, intermediate logs and compiler objects stay under the repository
-cache. The exhibits use maintained aggregates or the exact exported jump
-law; regenerating presentation makes no new model call or sampled trajectory.
 
 \end{document}

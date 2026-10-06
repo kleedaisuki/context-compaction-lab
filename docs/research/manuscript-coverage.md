@@ -71,3 +71,13 @@ Rebuilding presentation uses maintained aggregates and exact exported laws.
 New symbolic verification checks seven identities; 29 focused artifact,
 finite-engine and symbolic/continuum tests pass. No model call, community
 trajectory resampling, external-contract change or new CI was introduced.
+
+## Subsequent narrative refinement
+
+Task efficiency is now the final Discussion subsection, reduced to two basic
+paragraphs (about 150 source words) without displayed equations. The three
+equation labels and proofs remain in the task-efficiency appendix. Task-level
+evaluation is summarized as a secondary future-work direction in the Conclusion.
+This retains the objective boundary without competing with reconstruction/price
+geometry as the main contribution. Repeated artifact prose was shortened;
+the evidence index, rebuild commands and all experimental results are preserved.

@@ -88,7 +88,7 @@ are maintained under `paper`. Existing unrelated Lean-IDE edits remain untouched
 
 ## Expanded revision after reader feedback
 
-The reading copy now has 25 pages, eight vector figures, 21 numbered tables,
+The expanded milestone produced 25 pages, eight vector figures, 21 numbered tables,
 13 appendix sections and 27 references. All six main sections remain intact.
 The main evaluation adds the separately measured/controlled versioned-file
 mechanisms. Experimental appendices provide policy matrices, complete horizon
@@ -125,3 +125,28 @@ This is an evidence/narrative expansion, not a new community simulation.
 No paid model request, trace resampling, new CI or production-code/dependency
 change was introduced. Initial eleven-page source and PDF remain recoverable
 from Git history.
+
+## Narrative rebalance of the task-efficiency discussion
+
+Reader feedback identified an overemphasized secondary objective. The former
+5.4 task-efficiency subsection had 532 whitespace-delimited source words and
+three displays. It is now the final Discussion subsection (5.6), after the
+state-sufficiency and scope discussion, with two basic paragraphs totaling
+about 150 source words and no equations. The title is now "Task efficiency
+as a deployment criterion." It states the deployment boundary without
+launching a second theoretical paper inside the main argument.
+
+The ratio definitions, relative-success boundary and fractional optimum retain
+their original equation labels in the existing task-efficiency appendix.
+This preserves derivations and cross-references without making them central
+findings. The task-instance pairing and external success evaluation direction
+is summarized as future work in the Conclusion, after the primary next step
+of phase-conditioned reconstruction/cache control. All experiment results,
+figures, tables and price mechanisms are unchanged.
+
+The revision retains all eight figures, 21 tables and 13 appendix sections;
+page count is not its editorial target. Three-pass compilation resolves
+references with no overflowing boxes. Changed Discussion/Conclusion and
+appendix displays were rendered and inspected; the artifact link remains
+appendix-only. This is a focused editorial revision, not a new experiment.
+The final reading copy has 24 pages, with the short final-page spill removed.

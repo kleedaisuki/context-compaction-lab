@@ -265,6 +265,9 @@ def main(argv: list[str] | None = None) -> None:
     """Dispatch explicit research commands; malformed assumptions fail fast."""
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
+    from .working_set_cli import register_commands
+
+    register_commands(commands, _threshold_grid)
     sweep = commands.add_parser("sweep", help="Estimate expected total invoice on a grid.")
     sweep.add_argument(
         "--scenario",

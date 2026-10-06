@@ -4,4 +4,4 @@ This package studies API accounting, not task correctness or subscription
 quota consumption. Synthetic workloads are hypotheses until calibrated.
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"

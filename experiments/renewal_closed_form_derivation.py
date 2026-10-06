@@ -20,6 +20,7 @@ from context_compaction_lab.renewal_analytic import (
     ErlangRenewal,
     HyperexponentialRenewal,
     RenewalFees,
+    RenewalMoments,
     asymptotic_optimal_gap,
     optimal_gap,
     physical_cache_fees,
@@ -170,6 +171,69 @@ def hyperexponential_derivation() -> dict:
     }
 
 
+def arithmetic_expansion() -> dict:
+    """Derive the finite-support lattice constant and exact between-grid phase term."""
+    t, g, m2, m3, span = sp.symbols("t g m2 m3 delta", positive=True)
+    n = sp.Symbol("n", nonnegative=True, integer=True)
+    phase = sp.Symbol("r", real=True)
+    mean_steps = g / span
+    second_factorial = m2 / span**2 - mean_steps
+    third_factorial = m3 / span**3 - 3 * m2 / span**2 + 2 * mean_steps
+    f_expansion = 1 - mean_steps * t + second_factorial * t**2 / 2 - third_factorial * t**3 / 6
+    generating = span * (1 - t) / (t**2 * (1 - f_expansion))
+    poles = sp.expand(sp.series(generating, t, 0, 0).removeO())
+    grid = (
+        poles.coeff(t, -3) * (n + 1) * (n + 2) / 2
+        + poles.coeff(t, -2) * (n + 1)
+        + poles.coeff(t, -1)
+    )
+    intercept = m2 / (2 * g**2)
+    c0 = m2**2 / (4 * g**3) - m3 / (6 * g**2)
+    grid_constant = c0 - span**2 / (12 * g)
+    canonical_grid = (n * span) ** 2 / (2 * g) + intercept * n * span + grid_constant
+    assert sp.simplify(grid - canonical_grid) == 0
+    gap = (n + phase) * span
+    interpolated = canonical_grid + phase * span * (n * span / g + intercept + span / (2 * g))
+    continuum_plus_phase = (
+        gap**2 / (2 * g) + intercept * gap + grid_constant + span**2 * phase * (1 - phase) / (2 * g)
+    )
+    assert sp.simplify(interpolated - continuum_plus_phase) == 0
+    constant_growth = sp.simplify(continuum_plus_phase.subs({m2: g**2, m3: g**3, span: g}))
+    exact_constant_growth = g * n * (n + 1) / 2 + g * phase * (n + 1)
+    assert sp.simplify(constant_growth - exact_constant_growth) == 0
+    exact_gap = asymptotic_optimal_gap(RenewalMoments(1, 1, 1), 50, lattice_span=1)
+    assert exact_gap == 9.5
+    z = sp.Symbol("z")
+    f = (z + z**2) / 2
+    u_generating = 1 / ((1 - z) * (1 - f))
+    explicit_u_generating = (
+        sp.Rational(2, 3) * z / (1 - z) ** 2
+        + sp.Rational(8, 9) / (1 - z)
+        + sp.Rational(1, 9) / (1 + z / 2)
+    )
+    assert sp.cancel(u_generating - explicit_u_generating) == 0
+    d_generating = z * u_generating / (1 - z)
+    explicit_d_generating = (
+        z * (1 + z) / (3 * (1 - z) ** 3)
+        + 5 * z / (9 * (1 - z) ** 2)
+        + sp.Rational(2, 27) / (1 - z)
+        - sp.Rational(2, 27) / (1 + z / 2)
+    )
+    assert sp.cancel(d_generating - explicit_d_generating) == 0
+    return {
+        "generating_D": "delta*z/((1-z)^2*(1-F(z)))",
+        "generating_pole_terms": str(poles),
+        "grid_constant": str(grid_constant),
+        "phase_term": str(span**2 * phase * (1 - phase) / (2 * g)),
+        "full_D_asymptotic": str(continuum_plus_phase),
+        "constant_growth_exact_D": str(exact_constant_growth),
+        "constant_growth_gap_at_A_over_c_50": exact_gap,
+        "two_point_law": "P(G=1)=P(G=2)=1/2, span=1",
+        "two_point_exact_grid_D": "n^2/3+5*n/9+(2/27)*(1-(-1/2)^n)",
+        "scope": "finite-support arithmetic law with true support gcd as lattice span",
+    }
+
+
 def tail_and_random_reset() -> dict:
     """Check true four-price terminal tails and fresh random reset mean/variance effects."""
     gap, g, c, a = sp.symbols("L g c A", positive=True)
@@ -290,6 +354,7 @@ def main() -> None:
     result = {
         "symbolic_laws": symbolic_laws(),
         "moment_expansion": moment_expansion(),
+        "arithmetic_expansion": arithmetic_expansion(),
         "hyperexponential": hyperexponential_derivation(),
         "tail_and_random_reset": tail_and_random_reset(),
         "dimensionless_comparative_statics": dimensionless_results(),

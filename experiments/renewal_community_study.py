@@ -66,8 +66,14 @@ def scalar_analytics(curve: dict, renewal: dict, ledger: RenewalLedger) -> dict:
     """Record analytic reductions and numerical residuals without publishing arrays."""
     result = {k: float(v) for k, v in curve.items() if not isinstance(v, np.ndarray)}
     moments = RenewalMoments(renewal["mean"], renewal["moment2"], renewal["moment3"])
+    binned_moments = RenewalMoments(
+        renewal["binned_mean"], renewal["binned_moment2"], renewal["binned_moment3"]
+    )
     carry, _, setup, _ = ledger.coefficients()
-    result["third_moment_threshold"] = ledger.reset + asymptotic_optimal_gap(moments, setup / carry)
+    result["third_moment_threshold"] = ledger.reset + asymptotic_optimal_gap(
+        binned_moments, setup / carry, lattice_span=renewal["lattice_span"]
+    )
+    result["growth_lattice_span_tokens"] = renewal["lattice_span"]
     result["renewal_equation_residual"] = renewal["renewal_residual"]
     result["original_mean_growth"] = renewal["mean"]
     result["binned_mean_growth"] = renewal["binned_mean"]

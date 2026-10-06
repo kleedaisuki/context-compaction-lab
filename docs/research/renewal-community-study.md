@@ -71,6 +71,10 @@ including an exact bounded lattice ripple, is in
    E[D(H-S)]=E[A(S)]/c, not D(H-E[S])=E[A]/c. With exponential growth this has an
    exact mean/variance formula; concentrated resets need not be modeled as a
    broad independent Gamma variable.
+6. **Relative prices determine the line.** Multiplying all four prices by the
+   same positive factor scales every invoice and leaves the optimizer unchanged,
+   pathwise as well as in expectation. Uniform price cuts change the bill, whereas
+   different cache-read/write/output multipliers can change the compact policy.
 
 These statements depend on the declared regeneration and ledger. They are not
 assertions about arbitrary first-use file restoration, task phases, or TTL.
@@ -207,12 +211,25 @@ For the matched empirical IID baseline:
 | Exact empirical core crossing, no tail correction | 113,190 |
 | Empirical four-price crossing-tail correction | 112,848 |
 
+The third-moment comparison uses the actual binned lattice span (5 tokens),
+not a nonarithmetic formula applied silently to integers. For finite-support
+span delta, the grid constant is C_delta=C0-delta^2/(12g), with between-grid
+term delta^2*r*(1-r)/(2g). A generating-function pole calculation and exact
+constant-growth control verify this arithmetic correction in the closed-form
+derivation. It is tiny here, but removes an unjustified mathematical shortcut.
+
 The fluid answer is about 2.6k later than the corrected empirical optimum.
 The first correction is close in this scenario; the third moment is not
 automatically better. These approximations cannot be promoted to universally
 accurate closures merely because their algebra is more elaborate. The separate
 closed-form study demonstrates a 56.8% gap error for a short-gap hyperexponential
 moment approximation, versus a tiny error at sufficiently large gaps.
+
+"Large scale" here is relative to renewal increments and tail structure, not
+the absolute number of tokens. The baseline optimal gap is about 47k and contains
+only about 32 ordinary actions on average. An observed increment can exceed
+300k. A 100k-sized context therefore does not automatically justify a small-jump
+diffusion; deterministic jump/renewal evaluation is the informative cheap probe.
 
 ### Correlation: variance can matter more than the mean optimum
 
@@ -270,6 +287,22 @@ rate to 9.18e-8 USD/call; the difference is the finite start/end effect. A direc
 four-action crossing check proves the implementation does not bill a terminal
 compact and reconciles input/write/read/output independently.
 
+For the finite binned law, every threshold below 150k of gap belongs to an
+evaluated constant-cost lattice cell. The unbounded right tail is also bounded,
+not ignored: after the core optimum, j_core is nondecreasing, U is nondecreasing,
+and G_T<=G_max. Hence
+
+\[
+j_{\rm marked}(L)\ge j_{\rm core}(L)
+                  -|d|\theta G_{\max}/U(L)
+\]
+
+is a nondecreasing lower envelope for negative d. At gap 150k its primary value
+is 0.060846 USD/call, above the computed minimum 0.052701. Analogous positive
+margins are recorded for every scenario. This certifies the unbounded tail of
+the binned-law minimum without assuming a universal marked-law unimodality;
+the inequality is analytic, with bound values evaluated in floating point.
+
 SymPy checks Laplace transforms, derivative identities, marked-tail formulas,
 moment constants and compatibility with the existing exponential model. Lean
 checks the atomic renewal-average comparison and lag-advance algebra as well as
@@ -323,7 +356,7 @@ uv run python experiments/renewal_community_study.py
 
 Recorded study used Python 3.14.6, NumPy 2.5.3, 512 discovery and 512 independent
 confirmation trajectories, N=32/400/4000, deterministic seed schedule in the JSON,
-and `OPENBLAS_NUM_THREADS=1`; the main study took 19.35 seconds on this execution.
+and `OPENBLAS_NUM_THREADS=1`; the final main study took 20.77 seconds on this execution.
 The portable JSON records actual runtime version metadata; that metadata takes
 precedence over any environment prose if the runtime is updated. Generated raw
 pools, logs and `renewal-vs-community.png` remain under root `.cache`; only compact

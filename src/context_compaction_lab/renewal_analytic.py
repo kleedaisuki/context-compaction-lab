@@ -395,16 +395,38 @@ def rate_derivative(
     return numerator / stats.duration**2
 
 
-def asymptotic_optimal_gap(moments: RenewalMoments, fee_ratio: float) -> float:
-    """Invert the nonarithmetic D expansion, retaining its third-moment constant."""
+def asymptotic_optimal_gap(
+    moments: RenewalMoments,
+    fee_ratio: float,
+    *,
+    lattice_span: float | None = None,
+) -> float:
+    """Invert a moment expansion with an optional arithmetic span/phase correction.
+
+    The default preserves the nonarithmetic quadratic approximation. For a
+    finite-support law on span d, the grid constant is C0-d²/(12g), and the
+    between-grid term is d²*r*(1-r)/(2g). Including that term makes the inverse
+    linear within each cell. This remains a large-gap approximation except
+    when remaining pole terms vanish, as for constant growth d.
+    """
     _finite(fee_ratio, "fee_ratio", minimum=0)
     g, a, constant = moments.mean, moments.renewal_intercept, moments.integrated_constant
+    if lattice_span is not None:
+        _finite(lattice_span, "lattice_span", minimum=0)
+        if lattice_span <= 0:
+            raise ValueError("The actual arithmetic span must be strictly positive.")
+        constant -= lattice_span**2 / (12 * g)
     discriminant = a**2 * g**2 + 2 * g * (fee_ratio - constant)
     if discriminant < 0:
         raise ValueError("The large-gap quadratic approximation has no real root.")
     approximation = -a * g + math.sqrt(discriminant)
     if approximation <= 0:
         raise ValueError("The large-gap approximation is outside its positive-gap regime.")
+    if lattice_span is not None:
+        lower = math.floor(approximation / lattice_span) * lattice_span
+        grid_value = lower**2 / (2 * g) + a * lower + constant
+        slope = lower / g + a + lattice_span / (2 * g)
+        approximation = lower + (fee_ratio - grid_value) / slope
     return approximation
 
 

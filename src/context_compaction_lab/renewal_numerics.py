@@ -137,6 +137,8 @@ def empirical_renewal(
         "moment2": float(np.dot(w, x**2)),
         "moment3": float(np.dot(w, x**3)),
         "zero_mass": float(probabilities[0]),
+        "lattice_span": float(quantum * np.gcd.reduce(np.flatnonzero(probabilities[1:] > 0) + 1)),
+        "maximum_growth": float(quantum * np.flatnonzero(probabilities > 0)[-1]),
         "renewal_residual": float(np.max(np.abs(residual))),
     }
 
@@ -167,6 +169,17 @@ def analytic_rates(
     index = int(np.argmin(rate))
     if index in (0, len(rate) - 1):
         raise ValueError("Expand or refine the gap domain: marked minimum is at an endpoint.")
+    # Beyond the bracket the core rate is nondecreasing. Since G_T <= max G,
+    # a negative terminal coefficient has a monotone lower envelope -C/U(L).
+    # This certifies the unbounded right tail, rather than assuming a grid
+    # interior minimum is globally optimal for an arbitrary marked law.
+    terminal_price = tail_coefficient * ledger.tail_fraction
+    core_end = rate[-1] - terminal_price * renewal["terminal_growth"][-1] / renewal["duration"][-1]
+    tail_lower_bound = (
+        core_end + min(terminal_price, 0) * renewal["maximum_growth"] / renewal["duration"][-1]
+    )
+    if tail_lower_bound <= rate[index]:
+        raise ValueError("Expand the gap domain to certify the unbounded marked-cost tail.")
     return {
         "thresholds": renewal["gaps"] + ledger.reset,
         "rates": rate,
@@ -182,6 +195,8 @@ def analytic_rates(
         "duration_at_minimum": float(renewal["duration"][index]),
         "terminal_growth_at_minimum": float(renewal["terminal_growth"][index]),
         "baseline": baseline,
+        "global_right_tail_lower_bound": float(tail_lower_bound),
+        "global_right_tail_margin": float(tail_lower_bound - rate[index]),
     }
 
 

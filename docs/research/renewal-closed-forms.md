@@ -260,6 +260,91 @@ For Erlang-k,
 `C0=(1-a)/v`, which may be negative and large. A short gap relative to 1/v
 can invalidate a moments-only approximation even though all moments exist.
 
+### Finite-support arithmetic counterpart: grid constant and phase
+
+An empirical integer growth law, including a five-token binned law, is
+**arithmetic**. The preceding nonarithmetic C0 cannot be applied to it without
+a correction or an explicit smoothed/nonarithmetic-surrogate label.
+
+Let the finite-support law lie on `G=delta K`, where K is a nonnegative
+integer and the positive support indices have gcd 1. Delta is the actual
+maximal arithmetic span, not necessarily the bin width. If bin indices have
+gcd d, the span is `bin_width*d`. Write `L=delta(n+r)`, 0<=r<1. Then
+
+\[
+\boxed{D(n\delta)=\frac{(n\delta)^2}{2g}+a n\delta+C_\delta+o(1),
+\qquad C_\delta=C_0-\frac{\delta^2}{12g}.}
+\]
+
+Between lattice points, D is exactly linear, so the full expansion is
+
+\[
+\boxed{D(L)=\frac{L^2}{2g}+aL+C_\delta
++\frac{\delta^2}{2g}r(1-r)+o(1).}
+\]
+
+The ripple is bounded by `delta²/(8g)` and does not vanish as L grows at fixed
+span. For constant G=delta=g, C0=g/12 and C_delta=0; this recovers the exact
+deterministic periodic formula above, rather than incorrectly replacing its
+phase by g/12.
+
+**Generating-function derivation and finite-support justification.** Define
+`F(z)=E[z^K]`, `U_n=sum_j P(Y_j<=n delta)`, and `D_n=D(n delta)`. Then
+
+\[
+\sum_{n\ge0}U_nz^n=\frac1{(1-z)(1-F(z))},\quad
+\boxed{\sum_{n\ge0}D_nz^n=
+\frac{\delta z}{(1-z)^2(1-F(z))}.}
+\]
+
+Expand at t=1-z using `E[K]=g/delta` and factorial moments
+`E[K(K-1)]=m2/delta²-g/delta` and
+`E[K(K-1)(K-2)]=m3/delta³-3m2/delta²+2g/delta`. The triple, double, and
+simple poles respectively contribute `binomial(n+2,2)`, `n+1`, and 1 to
+coefficients. SymPy verifies that their polynomial equals
+`(n delta)²/(2g)+a n delta+C0-delta²/(12g)`.
+
+Because F is a finite polynomial with nonnegative coefficients and support
+gcd 1, `F(z)=1` has no unit-disk root except z=1: equality in the triangle
+inequality would force `z^k=1` for every positive support index. The remaining
+finitely many poles are strictly outside the unit circle. Their coefficient
+contributions decay exponentially, up to multiplicity polynomials. This
+justifies the stated remainder for the finite empirical-law model, not only a
+formal pole calculation. No broader heavy-tail arithmetic remainder theorem
+is silently assumed.
+
+Cell interpolation uses
+`U_n=n delta/g+a+delta/(2g)+o(1)` and produces the displayed phase term.
+The executable verifies the whole algebra plus an independent two-point law,
+`P(G=1)=P(G=2)=1/2`, whose exact grid formula is
+
+\[
+D(n)=n^2/3+5n/9+(2/27)\{1-(-1/2)^n\}.
+\]
+
+Its asymptotic grid constant is 2/27, with an explicit nonzero exponentially
+decaying pole contribution, confirming that the correction is not peculiar
+to deterministic growth.
+
+**Phase-corrected inverse and compatibility.** The existing
+`asymptotic_optimal_gap(moments,R)` retains its nonarithmetic default. The new
+keyword `lattice_span=delta` selects the arithmetic approximation. First solve
+the boundary quadratic with C_delta to obtain L_b, set
+`n=floor(L_b/delta)`, `x=n delta`, and return
+
+\[
+\boxed{L_{\rm phase}=x+
+\frac{R-\{x^2/(2g)+ax+C_\delta\}}
+{x/g+a+\delta/(2g)}.}
+\]
+
+The phase term cancels the quadratic inside each cell, so this is a closed
+linear inverse, not another threshold sweep. For constant G=1 and R=50 it
+returns the exact canonical root 9.5; the uncorrected nonarithmetic moment
+surrogate instead gives approximately 9.5041658. Except when transient pole
+terms vanish, the new inverse remains a large-gap approximation to the
+selected finite-support law and must be compared with its actual D.
+
 ## 6. Zero-growth actions
 
 If `p0=P(G=0)<1`, condition the law on G>0. Its renewal functions satisfy
@@ -434,7 +519,9 @@ renewal condition; a nonzero terminal correction is enabled only for the
 exponential law where its positive crossing is justified. `statistics(0)`
 returns a right limit for bracketing; actual rate evaluation requires L>0.
 `asymptotic_optimal_gap` rejects nonpositive approximate gaps and does not
-claim finite-gap accuracy. Random reset inputs enforce necessary bounded-
+claim finite-gap accuracy. Its optional `lattice_span` uses the grid and phase
+corrections above; omitting it selects the nonarithmetic/smoothed surrogate.
+Random reset inputs enforce necessary bounded-
 support variance constraints and the admissible threshold domain.
 
 Run from the repository root:
@@ -451,7 +538,8 @@ simulation path count, dependency, or version bump is a claimed contribution.
 expressions, general phase formulas, moment constants, marked-tail and reset
 identities, physical accounting coefficients, and the dimensionless evaluation
 table. The executable includes exact old-model equivalence checks, zero-mass
-thinning, stationary residual checks, and local rate comparisons.
+thinning, stationary residual checks, local rate comparisons, and exact
+arithmetic generating-function/constant-growth/two-point-law assertions.
 
 The useful outcome is a coherent analytic reduction with explicit validity
 boundaries: scalar renewal inversion for broad iid growth laws, tractable phase

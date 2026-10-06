@@ -226,6 +226,43 @@ theorem approximation_optimization_transfer {α : Type}
     _ ≤ approximateCost y + error := Nat.add_le_add_right second error
     _ ≤ (exactCost y + error) + error := Nat.add_le_add_right third error
     _ = exactCost y + 2 * error := by simp [Nat.two_mul, Nat.add_assoc]
+/-- Adding a positive renewal atom improves the average exactly when its marginal
+carry invoice is no larger than the previous average numerator. Positive U and w
+justify interpreting these cross products as ratios with positive denominators.
+There is no subtraction of a possibly negative advantage. -/
+theorem renewal_adjacent_average (A c M x U w : Nat) (_positiveU : 0 < U)
+    (positiveW : 0 < w) :
+    ((A + c * (M + x * w)) * U ≤ (A + c * M) * (U + w)) ↔
+      (c * x * U ≤ A + c * M) := by
+  have numeratorExpand :
+      (A + c * (M + x * w)) * U = (A + c * M) * U + (c * x * U) * w := by
+    simp [Nat.mul_add, Nat.mul_comm, Nat.mul_left_comm, Nat.add_assoc]
+  rw [numeratorExpand, Nat.mul_add, Nat.add_le_add_iff_left]
+  constructor
+  · intro comparison
+    exact Nat.le_of_mul_le_mul_right comparison positiveW
+  · intro comparison
+    exact Nat.mul_le_mul_right w comparison
+
+/-- Cumulative renewal lag grows strictly when the location advances by a positive
+integer gap. M <= x*U certifies nonnegative lag before natural subtraction; the
+new atom w sits exactly at x and therefore has zero lag before the advance. -/
+theorem renewal_lag_advance (x U M w gap : Nat) (positiveU : 0 < U)
+    (positiveGap : 0 < gap) (validMoment : M ≤ x * U) :
+    ((x + gap) * (U + w) - (M + x * w) =
+      (x * U - M) + gap * (U + w)) ∧
+    (x * U - M < (x + gap) * (U + w) - (M + x * w)) := by
+  have expansion : (x + gap) * (U + w) = x * U + x * w + gap * (U + w) := by
+    simp [Nat.add_mul, Nat.mul_add, Nat.add_assoc, Nat.add_left_comm]
+  have lagIdentity : (x + gap) * (U + w) - (M + x * w) =
+      (x * U - M) + gap * (U + w) := by
+    rw [expansion]
+    omega
+  constructor
+  · exact lagIdentity
+  · rw [lagIdentity]
+    apply Nat.lt_add_of_pos_right
+    exact Nat.mul_pos positiveGap (Nat.lt_of_lt_of_le positiveU (Nat.le_add_right U w))
 /-- Strict reset controller phases; execution is distinct from prerequisite restoration. -/
 inductive Phase where
   | missing
@@ -290,6 +327,8 @@ theorem threshold_not_increasing : fixtureCost 3 6 0 < fixtureCost 2 6 0 := by d
 #print axioms tree_cell_invoice
 #print axioms expected_tree_cell
 #print axioms approximation_optimization_transfer
+#print axioms renewal_adjacent_average
+#print axioms renewal_lag_advance
 #print axioms strict_obstruction
 #print axioms threshold_not_decreasing
 #print axioms threshold_not_increasing

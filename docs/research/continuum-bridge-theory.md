@@ -274,12 +274,88 @@ objective cannot have a useful smooth macroscopic approximation. Such spread
 belongs in the JOINT reset/transition law, preserving its correlations and
 contracts, rather than assigning independent Gaussian noise to every variable.
 
+## 7. Operational equivalence is stronger than an ontological argument
+
+A continuous probability law is a measure assigning probabilities to events,
+not a claim that one finite experiment realizes infinitely many outcomes.
+Finite volume, finite observations, bounded support, and finitely many possible
+states are distinct assertions. Even granting a strictly finite physical state
+space, a continuous surrogate can be useful at the resolution of the objective.
+
+Let X have any finite-support integer law p_k and independently draw
+V~Uniform[-1/2,1/2]. Then Y=X+V has density p_k in each cell
+[k-1/2,k+1/2), and rounding Y returns X almost surely. Every recorded integer
+probability is reproduced exactly, without an asymptotic limit. This does not
+identify sub-cell physical behavior or authorize a controller to operate on Y
+instead of X: the observation and action maps must be retained.
+
+Conversely, a finite grid law and a continuous law can be mutually singular
+even when they are excellent approximations for a chosen decision. For the
+midpoint coupling in section 1, total variation distance (supremum over all
+measurable events) is exactly 1: the grid itself has mass 1 in one law and 0 in
+the other. Yet the Lipschitz expected-loss discrepancy is at most Lip(f)/(4m).
+Thus closeness must be specified relative to observables, boundary probabilities,
+or decision loss; demanding closeness for arbitrary microscopic events defeats
+the intended abstraction. Weak convergence does not imply convergence of
+derivatives or arbitrary threshold-crossing policies.
+
+## 8. An exact continuous object for an integer renewal model
+
+The renewal result in [renewal-analytic-control.md](renewal-analytic-control.md)
+offers a stronger bridge than smoothing the bill. For integer nonnegative iid
+growth G, Y_n=sum_{j=1}^n G_j, and finite mean g>0, define
+
+```
+U(L) = sum_n P(Y_n < L),
+D(L) = sum_n E[(L-Y_n)_+] = integral_0^L U(t) dt.
+```
+
+The second equality follows from Tonelli applied to nonnegative integrands.
+On compact intervals U is finite under the stated iid assumptions, including
+zero-growth probability strictly below 1. D is continuous, convex, and piecewise
+linear for an integer law, even though the original invoice is a staircase.
+Under the canonical regenerative ledger, an atom x with mass w changes the
+ratio (A+cM)/U with sign c*(xU-M)-A = c*D(x)-A. Consequently the exact canonical
+root D(L*)=A/c selects an optimal invoice plateau without replacing the growth
+law by a Gaussian. This is not yet the arbitrary cache/file-state control theorem;
+marked-tail fees and nonregenerative dependencies require the stated extensions.
+
+For constant growth G=g, write L=g*(k+r), integer k>=0 and 0<=r<=1. Directly,
+
+```
+D(L) = g*(k+1)*(k/2+r)
+     = L^2/(2g) + L/2 + g*r*(1-r)/2,
+0 <= g*r*(1-r)/2 <= g/8.
+```
+
+Only finitely many positive ramps contribute for every finite L. The expression
+is exact, including grid boundaries, not a claim that an actual task is infinite.
+The smooth first-corrected quadratic differs from D by a bounded lattice ripple.
+Dropping both corrections gives the fluid square-root gap sqrt(2g*A/c).
+At g=2000 and A/c=2,500,000 token-actions, that gap is 100,000 tokens, whereas
+the exact canonical root is 99,000 and the optimal gap plateau is
+(98,000,100,000]. This is an explanatory scenario, not community calibration.
+
+Reproduction: `uv run python experiments/finite_continuum_bridge.py` checks these
+algebraic identities with SymPy and records the scenario in
+`.cache/finite-continuum-bridge/results.json`. No Monte Carlo or new test suite
+is used. The research implication is to seek analytically tractable integrated
+objects and decision-error bounds before either enforcing microscopic derivatives
+or inventing a continuous distribution family.
+
 ## Sources and transfer limits
 
 - Probability weak convergence and continuity-set conditions:
   [Aldous/Chewi, Berkeley graduate notes](https://www.stat.berkeley.edu/users/aldous/205B/chewi_notes.pdf),
   Lecture 7. Continuous mapping needs zero probability on discontinuity sets;
   weak law approximation alone does not preserve threshold events at atoms.
+- Probability measures, countable additivity, and distribution construction:
+  [Sheffield, MIT 18.175 Lecture 1](https://math.mit.edu/~sheffield/2016175/Lecture1.pdf).
+  Countable additivity is not uncountable summation of singleton probabilities.
+- Weak convergence framework:
+  [Saglietti, lecture notes](https://arxiv.org/abs/2007.10293).
+  The finite coupling, total-variation counterexample, jitter construction and
+  exact lattice identities above are derived here, not empirical assertions.
 - Discrete-to-continuous jump-process limits:
   [Kurtz, Journal of Applied Probability 1970](https://doi.org/10.1017/S0021900200026929).
   This establishes a classical route under its scaling assumptions; those

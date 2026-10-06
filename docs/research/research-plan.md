@@ -1,5 +1,29 @@
 # Research plan: expected invoice-optimal compaction thresholds
 
+## Price-vector sensitivity milestone (executed 2026-10-06)
+
+The [integrated price study](price-sensitivity-study.md) delivers exact core
+price-share signs, write/read/cache phase boundaries, mixed sensitivities,
+material-path derivatives, marked-tail reversal and local rank-one retuning
+regret. Price homogeneity, concave optimized invoices and usage monotonicity
+connect the scalar lane to general finite/history-dependent policy sets.
+SymPy identities and a new Lean revealed-preference law are executed before
+community confirmation; an independent category-level DP and finite contrasts
+check the physical usage basis and derivatives.
+
+The completed 35-case experiment combines six current official quoted vectors
+with the existing pinned public growth pool and fresh 512-by-4,000 iid/block
+confirmation. It separates invoice sensitivity from control sensitivity,
+pure repricing from altered cache/material/timing mechanisms, and sign-reversal
+existence from actual retuning benefit. See [portable results](price-sensitivity-results.json)
+and [review](price-sensitivity-review.md). It does not invent independent price
+priors or infer actual TTL reliability from tariff metadata.
+
+Next discriminating measurement: observe the joint conditional eligible-prefix,
+cache-age, hit, crossing-tail and restoration law. Test whether the required
+long-tariff cache gain actually occurs; that decision has much greater potential
+value than repeated microscopic scalar-threshold tuning.
+
 ## Analytic / community milestone (executed 2026-10-06)
 
 The concentrated mandatory-reconstruction lane now has a distribution-class

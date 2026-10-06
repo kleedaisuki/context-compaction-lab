@@ -5,6 +5,39 @@ compaction thresholds**. It uses stochastic workloads, explicit token-category
 accounting, analytic renewal laws, and paired discrete trajectory comparisons.
 It does not optimize task quality or claim a universal threshold.
 
+## Price vectors and sensitivity regimes (executed 2026-10-06)
+
+The [integrated sensitivity report](docs/research/price-sensitivity-study.md)
+derives what price/material/cache changes do **before** simulating them. The
+core root `D(L*)=A/c` gives a price-share sign law and a unique write-price/cache
+hit crossover. Full cold crossing tails can reverse that direction. Optimized
+invoices are concave in prices; their gradients are resource usage, not threshold
+gradients. Smooth scalar-control retuning regret has rank-one price curvature.
+Lean checks that raising one price weakly reduces optimized use of that resource.
+
+The executed 35-case study reuses pinned community growth, six official tariff
+vectors, and fresh paired IID/block confirmation. Price-only groups reprice ONE
+immutable token ledger. Uniform price scaling leaves thresholds unchanged;
+thin-prefix timing changes can reverse signs with tiny economic benefits;
+adding versus reclassifying stable material moves H in opposite directions.
+Long-cache tariff break-even is a required hypothetical hit gain, not a measured
+TTL effect. No actual cross-model performance comparison is claimed.
+
+Read [derivation](docs/research/price-sensitivity-theory.md),
+[SymPy identities](docs/research/price-sensitivity-symbolics.md),
+[official price evidence](docs/research/price-vector-evidence.md),
+[portable results](docs/research/price-sensitivity-results.json), and
+[independent review](docs/research/price-sensitivity-review.md).
+
+```powershell
+uv run python experiments/price_sensitivity_derivation.py
+uv run python experiments/price_sensitivity_crosscheck.py
+# Prepare the pinned growth pool using the calibration command below first.
+$env:OPENBLAS_NUM_THREADS='1'
+uv run python experiments/run_price_sensitivity.py --replicates 512 --calls 4000
+./formal/verify.ps1
+```
+
 ## Analytic renewal structure and executed community study
 
 The primary new result is **D(L*)=A/c**, where L=H-S is the gap above compulsory

@@ -112,7 +112,7 @@ def file_option_checks() -> dict:
     option = sp.expand(delta_valid - delta_missing)
     assert sp.expand(option - alpha * payload * p[1]) == 0
     return {
-        "domain": "cold eligible input; alpha in [0,1]; compact clears file/guard",
+        "domain": "cold eligible input; X>=B+D; alpha in [0,1]; compact clears file/guard",
         "compact_minus_keep_valid": str(delta_valid),
         "compact_minus_keep_missing": str(delta_missing),
         "valid_fact_option_gap": str(option),

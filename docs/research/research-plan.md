@@ -1,5 +1,16 @@
 # Research plan: expected invoice-optimal compaction thresholds
 
+## Structural theory milestone (v0.3, 2026-10-06)
+
+The primary deliverable is now exact joint-law control structure rather than
+another marginal fit or threshold sweep. Maintained synthesis:
+[threshold-operator-theory.md](threshold-operator-theory.md). Delivered layers
+include forward occupations/backward adjoints, exact policy difference,
+integer signed threshold derivatives, sufficient-state counterexamples with
+Bellman/LP certificates, exact symbolic price geometry, and kernel-checked
+finite Lean laws. The v0.2 numerical minima remain conditional historical
+experiments, not evidence of universal scalar-threshold optimality.
+
 ## Implemented working-set experiment milestone (v0.2, 2026-10-06)
 
 The finite-horizon versioned model and tests are delivered; it is no longer

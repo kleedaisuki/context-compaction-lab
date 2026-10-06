@@ -5,7 +5,49 @@ compaction thresholds**. It uses stochastic workloads, explicit token-category
 accounting, an exact first-passage control, and paired Monte Carlo comparisons.
 It does not optimize task quality or claim a universal threshold.
 
-## v0.2 working-set laboratory (primary experiment)
+## v0.3 theory-first structural analysis
+
+The research foundation is now an arbitrary joint conditional history law,
+not a collection of independent fitted marginals. It permits correlated,
+nonstationary and action-dependent outputs/requirements. Reduced Markov states
+require an explicit sufficiency condition. The fixed ordinary-work horizon
+must not advance just because a paid compaction occurred.
+
+Delivered results:
+
+- Exact finite-horizon occupation, adjoint and policy-difference identities;
+  threshold sensitivity depends on full future action advantage at the boundary.
+- Integer-token thresholds have a signed atomic derivative, not a smooth
+  sweet-point equation. Lean checks rational-cell invariance for arbitrary
+  finite threshold decision trees and finite correlated task weights.
+- Equal-length reachable states can require opposite controls. An exact
+  one-stage occupation LP/Bellman certificate proves a scalar-threshold gap.
+- SymPy extracts true occupation polynomials from actual simulator paths,
+  with exact price-comparison hyperplanes and the global candidate price hull.
+- Dependency-free Lean proofs check finite accounting, price-region laws,
+  quantization and strict reconstruction-loop obstruction.
+
+Read [the threshold/operator synthesis](docs/research/threshold-operator-theory.md),
+[general joint-law control](docs/research/general-stochastic-control-theory.md),
+[exact symbolic results](docs/research/structural-symbolic-analysis.md),
+[mathematical tool review](docs/research/mathematical-tools-for-compaction.md),
+and [Lean proof scope](docs/research/lean-structural-verification.md).
+
+```powershell
+uv sync --locked
+uv run python experiments/threshold_operator_analysis.py
+uv run python experiments/structural_symbolic_analysis.py
+uv run python experiments/structural_control_counterexample.py
+./formal/verify.ps1  # Requires the already installed Lean 4.33.1; downloads nothing.
+uv run python experiments/summarize_structural_theory.py
+```
+
+The previous numerical 126k/78k selections are controlled v0.2 scenarios,
+not theoretical optimality statements or production recommendations. Their
+source hash corresponds to historical commit `85aa959`, not the subsequently
+expanded symbolic package. No old transition/ledger interfaces were changed.
+
+## v0.2 working-set laboratory (historical controlled experiment)
 
 The implemented model now tracks current file versions, visible snapshots,
 qualifying-read state, recent valid observations, exact-prefix reuse and TTL.

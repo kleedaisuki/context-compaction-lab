@@ -1,0 +1,760 @@
+{
+  "version": "0.3.0",
+  "scope": "structural_theory_exact_finite_checks_not_production_threshold_advice",
+  "operator_checks": {
+    "sympy_version": "1.14.0",
+    "operator_checks": {
+      "domain": "theta, phi, rho, beta in [0,1]; ledger entries nonnegative",
+      "horizon": 3,
+      "state_dimension": 2,
+      "exact_ledger": [
+        "-beta**2*l2_0*rho + beta**2*l2_0 + beta**2*l2_4*rho - beta**2*l2_4 - beta*l1_0*rho + beta*l1_0 + beta*l1_4*rho - beta*l1_4 + 2*beta*l2_0*rho*theta - beta*l2_0*theta - 2*beta*l2_4*rho*theta + beta*l2_4*theta + l0_0*rho - l0_4*rho + l0_4 + l1_0*rho*theta - l1_4*rho*theta + l1_4 - l2_0*rho*theta**2 + l2_0*theta + l2_4*rho*theta**2 - l2_4*theta + l2_4",
+        "-beta**2*l2_1*rho + beta**2*l2_1 + beta**2*l2_5*rho - beta**2*l2_5 - beta*l1_1*rho + beta*l1_1 + beta*l1_5*rho - beta*l1_5 + 2*beta*l2_1*rho*theta - beta*l2_1*theta - 2*beta*l2_5*rho*theta + beta*l2_5*theta + l0_1*rho - l0_5*rho + l0_5 + l1_1*rho*theta - l1_5*rho*theta + l1_5 - l2_1*rho*theta**2 + l2_1*theta + l2_5*rho*theta**2 - l2_5*theta + l2_5",
+        "-beta**2*l2_2*rho + beta**2*l2_2 + beta**2*l2_6*rho - beta**2*l2_6 - beta*l1_2*rho + beta*l1_2 + beta*l1_6*rho - beta*l1_6 + 2*beta*l2_2*rho*theta - beta*l2_2*theta - 2*beta*l2_6*rho*theta + beta*l2_6*theta + l0_2*rho - l0_6*rho + l0_6 + l1_2*rho*theta - l1_6*rho*theta + l1_6 - l2_2*rho*theta**2 + l2_2*theta + l2_6*rho*theta**2 - l2_6*theta + l2_6",
+        "-beta**2*l2_3*rho + beta**2*l2_3 + beta**2*l2_7*rho - beta**2*l2_7 - beta*l1_3*rho + beta*l1_3 + beta*l1_7*rho - beta*l1_7 + 2*beta*l2_3*rho*theta - beta*l2_3*theta - 2*beta*l2_7*rho*theta + beta*l2_7*theta + l0_3*rho - l0_7*rho + l0_7 + l1_3*rho*theta - l1_7*rho*theta + l1_7 - l2_3*rho*theta**2 + l2_3*theta + l2_7*rho*theta**2 - l2_7*theta + l2_7"
+      ],
+      "checks": {
+        "occupation_invoice_residual": "0",
+        "adjoint_residual": "0",
+        "policy_difference_residual": "0",
+        "price_gradient_residual_0": "0",
+        "price_gradient_residual_1": "0",
+        "price_gradient_residual_2": "0",
+        "price_gradient_residual_3": "0"
+      },
+      "parameter_derivative": "2*beta*l2_0*p_i*rho - beta*l2_0*p_i + 2*beta*l2_1*p_w*rho - beta*l2_1*p_w + 2*beta*l2_2*p_r*rho - beta*l2_2*p_r + 2*beta*l2_3*p_o*rho - beta*l2_3*p_o - 2*beta*l2_4*p_i*rho + beta*l2_4*p_i - 2*beta*l2_5*p_w*rho + beta*l2_5*p_w - 2*beta*l2_6*p_r*rho + beta*l2_6*p_r - 2*beta*l2_7*p_o*rho + beta*l2_7*p_o + l1_0*p_i*rho + l1_1*p_w*rho + l1_2*p_r*rho + l1_3*p_o*rho - l1_4*p_i*rho - l1_5*p_w*rho - l1_6*p_r*rho - l1_7*p_o*rho - 2*l2_0*p_i*rho*theta + l2_0*p_i - 2*l2_1*p_w*rho*theta + l2_1*p_w - 2*l2_2*p_r*rho*theta + l2_2*p_r - 2*l2_3*p_o*rho*theta + l2_3*p_o + 2*l2_4*p_i*rho*theta - l2_4*p_i + 2*l2_5*p_w*rho*theta - l2_5*p_w + 2*l2_6*p_r*rho*theta - l2_6*p_r + 2*l2_7*p_o*rho*theta - l2_7*p_o",
+      "scope": "arbitrary formal ledger coefficients; operator identity, not workload fit"
+    },
+    "boundary_check": {
+      "domain": "X uniform on [0,1], 0<h<1, a,b,c>=0",
+      "expected_cost": "a*h + b*h**2/2 - c*h + c",
+      "true_expected_derivative": "a + b*h - c",
+      "ordinary_pathwise_derivative": "0",
+      "boundary_advantage": "a + b*h - c",
+      "interpretation": "Q symbols include future costs; this is not an engineering approximation"
+    },
+    "file_option_check": {
+      "domain": "cold eligible input; X>=B+D; alpha in [0,1]; compact clears file/guard",
+      "compact_minus_keep_valid": "B*p_w + D*alpha*p_w + S*p_o + S*p_w + X*p_i - X*p_w + c*p_i",
+      "compact_minus_keep_missing": "B*p_w + S*p_o + S*p_w + X*p_i - X*p_w + c*p_i",
+      "valid_fact_option_gap": "D*alpha*p_w",
+      "opposite_control_region": "-alpha*D*p_w < T < 0",
+      "T": "p_i*(X+c) + p_w*(B+S-X) + p_o*S",
+      "interpretation": "T<0 makes compact best for missing file, but T+alpha*D*p_w>0 makes keep best for valid file; region is open, not an isolated point"
+    }
+  },
+  "symbolic_structure": {
+    "h100_occupations": {
+      "first_use": {
+        "input_tokens": {
+          "polynomial": "58",
+          "factorization": "58",
+          "coefficients_descending": [
+            "58"
+          ]
+        },
+        "write_tokens": {
+          "polynomial": "26*alpha**4 - 52*alpha**3 - 78*alpha**2 + 208*alpha + 320",
+          "factorization": "2*(13*alpha**4 - 26*alpha**3 - 39*alpha**2 + 104*alpha + 160)",
+          "coefficients_descending": [
+            "26",
+            "-52",
+            "-78",
+            "208",
+            "320"
+          ]
+        },
+        "read_tokens": {
+          "polynomial": "-26*alpha**2 + 156*alpha + 578",
+          "factorization": "-2*(13*alpha**2 - 78*alpha - 289)",
+          "coefficients_descending": [
+            "-26",
+            "156",
+            "578"
+          ]
+        },
+        "output_tokens": {
+          "polynomial": "104",
+          "factorization": "104",
+          "coefficients_descending": [
+            "104"
+          ]
+        }
+      },
+      "eager": {
+        "input_tokens": {
+          "polynomial": "58",
+          "factorization": "58",
+          "coefficients_descending": [
+            "58"
+          ]
+        },
+        "write_tokens": {
+          "polynomial": "424",
+          "factorization": "424",
+          "coefficients_descending": [
+            "424"
+          ]
+        },
+        "read_tokens": {
+          "polynomial": "708",
+          "factorization": "708",
+          "coefficients_descending": [
+            "708"
+          ]
+        },
+        "output_tokens": {
+          "polynomial": "104",
+          "factorization": "104",
+          "coefficients_descending": [
+            "104"
+          ]
+        }
+      },
+      "preserve_without_guard": {
+        "input_tokens": {
+          "polynomial": "14*alpha**7 - 56*alpha**6 + 84*alpha**5 - 28*alpha**4 - 56*alpha**3 + 84*alpha**2 + 58",
+          "factorization": "2*(7*alpha**7 - 28*alpha**6 + 42*alpha**5 - 14*alpha**4 - 28*alpha**3 + 42*alpha**2 + 29)",
+          "coefficients_descending": [
+            "14",
+            "-56",
+            "84",
+            "-28",
+            "-56",
+            "84",
+            "0",
+            "58"
+          ]
+        },
+        "write_tokens": {
+          "polynomial": "108*alpha**7 - 536*alpha**6 + 1194*alpha**5 - 1490*alpha**4 + 1180*alpha**3 - 626*alpha**2 + 598*alpha + 320",
+          "factorization": "2*(54*alpha**7 - 268*alpha**6 + 597*alpha**5 - 745*alpha**4 + 590*alpha**3 - 313*alpha**2 + 299*alpha + 160)",
+          "coefficients_descending": [
+            "108",
+            "-536",
+            "1194",
+            "-1490",
+            "1180",
+            "-626",
+            "598",
+            "320"
+          ]
+        },
+        "read_tokens": {
+          "polynomial": "26*alpha**7 - 186*alpha**6 + 588*alpha**5 - 1094*alpha**4 + 1298*alpha**3 - 1056*alpha**2 + 624*alpha + 578",
+          "factorization": "2*(13*alpha**7 - 93*alpha**6 + 294*alpha**5 - 547*alpha**4 + 649*alpha**3 - 528*alpha**2 + 312*alpha + 289)",
+          "coefficients_descending": [
+            "26",
+            "-186",
+            "588",
+            "-1094",
+            "1298",
+            "-1056",
+            "624",
+            "578"
+          ]
+        },
+        "output_tokens": {
+          "polynomial": "8*alpha**7 - 32*alpha**6 + 48*alpha**5 - 16*alpha**4 - 32*alpha**3 + 48*alpha**2 + 104",
+          "factorization": "8*(alpha**7 - 4*alpha**6 + 6*alpha**5 - 2*alpha**4 - 4*alpha**3 + 6*alpha**2 + 13)",
+          "coefficients_descending": [
+            "8",
+            "-32",
+            "48",
+            "-16",
+            "-32",
+            "48",
+            "0",
+            "104"
+          ]
+        }
+      },
+      "preserve_with_guard": {
+        "input_tokens": {
+          "polynomial": "58",
+          "factorization": "58",
+          "coefficients_descending": [
+            "58"
+          ]
+        },
+        "write_tokens": {
+          "polynomial": "-26*alpha**8 + 234*alpha**7 - 910*alpha**6 + 2028*alpha**5 - 2860*alpha**4 + 2652*alpha**3 - 1612*alpha**2 + 598*alpha + 320",
+          "factorization": "-2*(13*alpha**8 - 117*alpha**7 + 455*alpha**6 - 1014*alpha**5 + 1430*alpha**4 - 1326*alpha**3 + 806*alpha**2 - 299*alpha - 160)",
+          "coefficients_descending": [
+            "-26",
+            "234",
+            "-910",
+            "2028",
+            "-2860",
+            "2652",
+            "-1612",
+            "598",
+            "320"
+          ]
+        },
+        "read_tokens": {
+          "polynomial": "26*alpha**7 - 208*alpha**6 + 728*alpha**5 - 1456*alpha**4 + 1820*alpha**3 - 1404*alpha**2 + 624*alpha + 578",
+          "factorization": "2*(13*alpha**7 - 104*alpha**6 + 364*alpha**5 - 728*alpha**4 + 910*alpha**3 - 702*alpha**2 + 312*alpha + 289)",
+          "coefficients_descending": [
+            "26",
+            "-208",
+            "728",
+            "-1456",
+            "1820",
+            "-1404",
+            "624",
+            "578"
+          ]
+        },
+        "output_tokens": {
+          "polynomial": "104",
+          "factorization": "104",
+          "coefficients_descending": [
+            "104"
+          ]
+        }
+      },
+      "stable_first_use": {
+        "input_tokens": {
+          "polynomial": "58",
+          "factorization": "58",
+          "coefficients_descending": [
+            "58"
+          ]
+        },
+        "write_tokens": {
+          "polynomial": "26*alpha**4 - 52*alpha**3 - 78*alpha**2 + 208*alpha + 224",
+          "factorization": "2*(13*alpha**4 - 26*alpha**3 - 39*alpha**2 + 104*alpha + 112)",
+          "coefficients_descending": [
+            "26",
+            "-52",
+            "-78",
+            "208",
+            "224"
+          ]
+        },
+        "read_tokens": {
+          "polynomial": "-26*alpha**2 + 156*alpha + 674",
+          "factorization": "-2*(13*alpha**2 - 78*alpha - 337)",
+          "coefficients_descending": [
+            "-26",
+            "156",
+            "674"
+          ]
+        },
+        "output_tokens": {
+          "polynomial": "104",
+          "factorization": "104",
+          "coefficients_descending": [
+            "104"
+          ]
+        }
+      },
+      "stable_preserve_with_guard": {
+        "input_tokens": {
+          "polynomial": "58",
+          "factorization": "58",
+          "coefficients_descending": [
+            "58"
+          ]
+        },
+        "write_tokens": {
+          "polynomial": "-26*alpha**8 + 234*alpha**7 - 910*alpha**6 + 2028*alpha**5 - 2860*alpha**4 + 2652*alpha**3 - 1612*alpha**2 + 598*alpha + 224",
+          "factorization": "-2*(13*alpha**8 - 117*alpha**7 + 455*alpha**6 - 1014*alpha**5 + 1430*alpha**4 - 1326*alpha**3 + 806*alpha**2 - 299*alpha - 112)",
+          "coefficients_descending": [
+            "-26",
+            "234",
+            "-910",
+            "2028",
+            "-2860",
+            "2652",
+            "-1612",
+            "598",
+            "224"
+          ]
+        },
+        "read_tokens": {
+          "polynomial": "26*alpha**7 - 208*alpha**6 + 728*alpha**5 - 1456*alpha**4 + 1820*alpha**3 - 1404*alpha**2 + 624*alpha + 674",
+          "factorization": "2*(13*alpha**7 - 104*alpha**6 + 364*alpha**5 - 728*alpha**4 + 910*alpha**3 - 702*alpha**2 + 312*alpha + 337)",
+          "coefficients_descending": [
+            "26",
+            "-208",
+            "728",
+            "-1456",
+            "1820",
+            "-1404",
+            "624",
+            "674"
+          ]
+        },
+        "output_tokens": {
+          "polynomial": "104",
+          "factorization": "104",
+          "coefficients_descending": [
+            "104"
+          ]
+        }
+      }
+    },
+    "h100_demand_cost_polynomial": "3*(325*alpha**4 - 650*alpha**3 - 1001*alpha**2 + 2756*alpha + 10358)/10000000",
+    "h100_demand_cost_derivative": "39*(50*alpha**3 - 75*alpha**2 - 77*alpha + 106)/5000000",
+    "h100_price_gradient": [
+      "58",
+      "26*alpha**4 - 52*alpha**3 - 78*alpha**2 + 208*alpha + 320",
+      "-26*alpha**2 + 156*alpha + 578",
+      "104"
+    ],
+    "h100_price_hessian": "Matrix([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]])",
+    "stable_minus_first_use_hyperplane": "96*(p_r - p_w)",
+    "preserve_guard_minus_first_use_hyperplane": "-26*alpha*(alpha - 1)*(alpha**6*p_w - alpha**5*p_r - 8*alpha**5*p_w + 7*alpha**4*p_r + 27*alpha**4*p_w - 21*alpha**3*p_r - 51*alpha**3*p_w + 35*alpha**2*p_r + 60*alpha**2*p_w - 35*alpha*p_r - 44*alpha*p_w + 18*p_r + 15*p_w)",
+    "preserve_guard_q_nonnegative_coefficient_certificate": [
+      "0",
+      "q**6 + 2*q**5 + 2*q**4 + 3*q**3 + 4*q**2 + 3*q",
+      "q**5 + 2*q**4 + 3*q**3 + 4*q**2 + 5*q + 3",
+      "0"
+    ],
+    "threshold_read_write_crossover_symbolic_alpha": "(130*alpha**8 - 975*alpha**7 + 3185*alpha**6 - 5850*alpha**5 + 6435*alpha**4 - 4095*alpha**3 + 1235*alpha**2 + 183)/(5*(26*alpha**7 - 195*alpha**6 + 624*alpha**5 - 1131*alpha**4 + 1261*alpha**3 - 845*alpha**2 + 286*alpha + 142))",
+    "threshold_read_write_crossover_at_7_over_20": "588316516163/2286290402180",
+    "threshold_crossover_alpha_stationary_root_interval": [
+      "2329/19957",
+      "1988/17035"
+    ],
+    "demand_curvature_counterexample": {
+      "physical_threshold": 71,
+      "cost_polynomial": "3*(915*alpha**7 - 4605*alpha**6 + 11100*alpha**5 - 14880*alpha**4 + 13050*alpha**3 - 5670*alpha**2 + 6450*alpha + 10306)/10000000",
+      "second_derivative_at_7_over_20": "1764843003/3200000000000"
+    },
+    "global_price_phases": [
+      {
+        "ratio_lower": "0",
+        "ratio_upper": "127838838721/693830134060",
+        "ratio_lower_numeric": 0.0,
+        "ratio_upper_numeric": 0.1842509174009801,
+        "normalized_cost_intercept": "7526035500627/12800000000",
+        "normalized_cost_slope": "743732071339/640000000",
+        "optimizers_inside_interval": [
+          {
+            "policy": "first_use",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "preserve_without_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "preserve_with_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "stable_preserve_with_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "first_use",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "preserve_without_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "preserve_with_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "stable_preserve_with_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          }
+        ]
+      },
+      {
+        "ratio_lower": "127838838721/693830134060",
+        "ratio_upper": "883638123047/1059783982420",
+        "ratio_lower_numeric": 0.1842509174009801,
+        "ratio_upper_numeric": 0.8337907891655678,
+        "normalized_cost_intercept": "8293068532953/12800000000",
+        "normalized_cost_slope": "535583031121/640000000",
+        "optimizers_inside_interval": [
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 157,
+            "integer_upper": 178
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "first_use",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "preserve_without_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "preserve_with_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "stable_preserve_with_guard",
+            "integer_lower": 269,
+            "integer_upper": null
+          },
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 157,
+            "integer_upper": 178
+          }
+        ]
+      },
+      {
+        "ratio_lower": "883638123047/1059783982420",
+        "ratio_upper": "1",
+        "ratio_lower_numeric": 0.8337907891655678,
+        "ratio_upper_numeric": 1.0,
+        "normalized_cost_intercept": "286772083/400000",
+        "normalized_cost_slope": "60324229/80000",
+        "optimizers_inside_interval": [
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 119,
+            "integer_upper": 122
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 119,
+            "integer_upper": 122
+          },
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 157,
+            "integer_upper": 178
+          }
+        ]
+      },
+      {
+        "ratio_lower": "1",
+        "ratio_upper": "1606254/1537405",
+        "ratio_lower_numeric": 1.0,
+        "ratio_upper_numeric": 1.0447826044536086,
+        "normalized_cost_intercept": "316640963/400000",
+        "normalized_cost_slope": "54350453/80000",
+        "optimizers_inside_interval": [
+          {
+            "policy": "first_use",
+            "integer_lower": 119,
+            "integer_upper": 122
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "first_use",
+            "integer_lower": 119,
+            "integer_upper": 122
+          },
+          {
+            "policy": "stable_first_use",
+            "integer_lower": 119,
+            "integer_upper": 122
+          }
+        ]
+      },
+      {
+        "ratio_lower": "1606254/1537405",
+        "ratio_upper": "567597401/341621500",
+        "ratio_lower_numeric": 1.0447826044536086,
+        "ratio_upper_numeric": 1.6614803254479007,
+        "normalized_cost_intercept": "67504453/80000",
+        "normalized_cost_slope": "125883/200",
+        "optimizers_inside_interval": [
+          {
+            "policy": "first_use",
+            "integer_lower": 97,
+            "integer_upper": 100
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "first_use",
+            "integer_lower": 97,
+            "integer_upper": 100
+          },
+          {
+            "policy": "first_use",
+            "integer_lower": 119,
+            "integer_upper": 122
+          }
+        ]
+      },
+      {
+        "ratio_lower": "567597401/341621500",
+        "ratio_upper": "8902150867/4113690500",
+        "ratio_lower_numeric": 1.6614803254479007,
+        "ratio_upper_numeric": 2.164030295181419,
+        "normalized_cost_intercept": "7318042701/8000000",
+        "normalized_cost_slope": "9387397/16000",
+        "optimizers_inside_interval": [
+          {
+            "policy": "first_use",
+            "integer_lower": 89,
+            "integer_upper": 92
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "first_use",
+            "integer_lower": 89,
+            "integer_upper": 92
+          },
+          {
+            "policy": "first_use",
+            "integer_lower": 97,
+            "integer_upper": 100
+          }
+        ]
+      },
+      {
+        "ratio_lower": "8902150867/4113690500",
+        "ratio_upper": "13636201629/4571373500",
+        "ratio_lower_numeric": 2.164030295181419,
+        "ratio_upper_numeric": 2.9829550416302673,
+        "normalized_cost_intercept": "2989532136469/3200000000",
+        "normalized_cost_slope": "3697367133/6400000",
+        "optimizers_inside_interval": [
+          {
+            "policy": "first_use",
+            "integer_lower": 71,
+            "integer_upper": 88
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "first_use",
+            "integer_lower": 71,
+            "integer_upper": 88
+          },
+          {
+            "policy": "first_use",
+            "integer_lower": 89,
+            "integer_upper": 92
+          }
+        ]
+      },
+      {
+        "ratio_lower": "13636201629/4571373500",
+        "ratio_upper": "183/55",
+        "ratio_lower_numeric": 2.9829550416302673,
+        "ratio_upper_numeric": 3.327272727272727,
+        "normalized_cost_intercept": "55021/50",
+        "normalized_cost_slope": "522",
+        "optimizers_inside_interval": [
+          {
+            "policy": "first_use",
+            "integer_lower": 63,
+            "integer_upper": 70
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "first_use",
+            "integer_lower": 63,
+            "integer_upper": 70
+          },
+          {
+            "policy": "first_use",
+            "integer_lower": 71,
+            "integer_upper": 88
+          }
+        ]
+      },
+      {
+        "ratio_lower": "183/55",
+        "ratio_upper": "oo",
+        "ratio_lower_numeric": 3.327272727272727,
+        "ratio_upper_numeric": null,
+        "normalized_cost_intercept": "1148",
+        "normalized_cost_slope": "5077/10",
+        "optimizers_inside_interval": [
+          {
+            "policy": "first_use",
+            "integer_lower": 33,
+            "integer_upper": 62
+          }
+        ],
+        "optimizers_at_lower_endpoint": [
+          {
+            "policy": "first_use",
+            "integer_lower": 33,
+            "integer_upper": 62
+          },
+          {
+            "policy": "first_use",
+            "integer_lower": 63,
+            "integer_upper": 70
+          }
+        ]
+      }
+    ]
+  },
+  "price_hull_certificate": {
+    "candidate_lines_including_duplicates": 122,
+    "certified_intervals": 9,
+    "exact_endpoint_or_tail_inequalities": 2196,
+    "domain": "alpha=7/20; p_i/p_w=4/5; p_o/p_w=4; p_r/p_w>=0",
+    "scope": "all extracted six-policy threshold cells, not every admissible controller"
+  },
+  "control_certificate": {
+    "scope": "One remaining action; observed A/B mixture; fixed first-use reset semantics",
+    "occupation_columns": [
+      "A-continue",
+      "A-compact",
+      "B-continue",
+      "B-compact"
+    ],
+    "flow_matrix": [
+      [
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1
+      ]
+    ],
+    "flow_rhs": [
+      "1/2",
+      "1/2"
+    ],
+    "exact_action_cost_vector_usd": [
+      "75843/2000000",
+      "80361/2000000",
+      "90843/2000000",
+      "80361/2000000"
+    ],
+    "exact_dual_state_potentials_usd": [
+      "75843/2000000",
+      "80361/2000000"
+    ],
+    "exact_dual_inequality_slacks_usd": [
+      "0",
+      "2259/1000000",
+      "5241/1000000",
+      "0"
+    ],
+    "exact_optimal_occupation_vector": [
+      "1/2",
+      "0",
+      "0",
+      "1/2"
+    ],
+    "exact_primal_value_usd": "39051/1000000",
+    "exact_dual_value_usd": "39051/1000000",
+    "exact_best_threshold_value_usd": "80361/2000000",
+    "exact_threshold_gap_usd": "2259/2000000",
+    "threshold_gap_percent_of_threshold_invoice": 2.811065068876694,
+    "opposite_action_price_coefficients_I_W_R_O": {
+      "Delta_A_positive": [
+        10128,
+        -7900,
+        0,
+        100
+      ],
+      "Delta_B_negative": [
+        10128,
+        -9900,
+        0,
+        100
+      ],
+      "four_active_Delta_A_positive": [
+        9128,
+        -7400,
+        0,
+        100
+      ],
+      "four_active_Delta_B_negative": [
+        9128,
+        -7900,
+        0,
+        100
+      ]
+    }
+  },
+  "state_insufficiency": {
+    "valid_file": {
+      "context_tokens": 10000,
+      "cached_prefix_tokens": 0,
+      "valid_file": true,
+      "remaining_ordinary_actions": 1,
+      "next_requirement_probability": "1/2",
+      "optimal_action": "continue",
+      "costs_usd": {
+        "continue": 0.0379215,
+        "compact": 0.0401805
+      },
+      "exact_costs_usd": {
+        "continue": "75843/2000000",
+        "compact": "80361/2000000"
+      }
+    },
+    "missing_file": {
+      "context_tokens": 10000,
+      "cached_prefix_tokens": 0,
+      "valid_file": false,
+      "remaining_ordinary_actions": 1,
+      "next_requirement_probability": "1/2",
+      "optimal_action": "compact",
+      "costs_usd": {
+        "continue": 0.0454215,
+        "compact": 0.0401805
+      },
+      "exact_costs_usd": {
+        "continue": "90843/2000000",
+        "compact": "80361/2000000"
+      }
+    }
+  },
+  "lean": {
+    "version": "Lean (version 4.33.1, x86_64-w64-windows-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+    "checked_theorem_count": 21,
+    "custom_axioms_or_admitted_proofs": false,
+    "standard_foundations": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "scope": "finite ledgers/weights and rational threshold trees; not Python refinement"
+  }
+}

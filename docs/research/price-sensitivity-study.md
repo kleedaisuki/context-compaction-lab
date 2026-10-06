@@ -6,6 +6,11 @@ switching surfaces first, then measure their economic importance on the pinned
 community workload. It does not estimate task quality or compare actual model
 execution. [Portable results](price-sensitivity-results.json) contain all 35 cases.
 
+Historical six-vector milestone at commit `2d514a8`; the later
+[GPT/Qwen/DeepSeek extension](price-family-study.md) preserves these results
+while expanding the current catalog to 38 vectors. Commands below now consume
+the current catalog; use the historical commit to reproduce exactly 35 cases.
+
 ## 1. The useful distinction: control response versus invoice response
 
 For a fixed external workload/cache law and feasible policy set, let m(h) be

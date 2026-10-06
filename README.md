@@ -7,6 +7,19 @@ It does not optimize task quality or claim a universal threshold.
 
 ## Price vectors and sensitivity regimes (executed 2026-10-06)
 
+The [GPT/Qwen/DeepSeek extension](docs/research/price-family-study.md) expands
+the catalog to **38 official quoted vectors** and executes **143 cases** at
+declared q=.8/.95/1, with paired IID/block confirmation. It distinguishes
+current GPT write fees, Qwen cache modes and regions, and DeepSeek time bands.
+Constant tariff projections are not actual request-tier/time-dependent billing
+or model-performance comparisons; Qwen's specific/generic quote discrepancy is
+flagged explicitly. Original 35-case analytical results remain unchanged.
+
+```powershell
+uv run python experiments/run_price_sensitivity.py --cache-conditions 0.8 0.95 1 --result-name price-family-results
+uv run python experiments/price_family_crosscheck.py
+```
+
 The [integrated sensitivity report](docs/research/price-sensitivity-study.md)
 derives what price/material/cache changes do **before** simulating them. The
 core root `D(L*)=A/c` gives a price-share sign law and a unique write-price/cache

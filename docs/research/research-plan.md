@@ -1,5 +1,20 @@
 # Research plan: expected invoice-optimal compaction thresholds
 
+## GPT / Qwen / DeepSeek price extension (executed 2026-10-06)
+
+The [expanded family study](price-family-study.md) now covers 38 official
+quoted vectors and 143 conditional scenarios, reusing the original public
+pool and common-action trajectories. GPT ratio classes, Qwen explicit versus
+implicit cache modes/regions, and DeepSeek uniform peak scaling have distinct
+control and invoice implications. All historical 35 analytical cases are
+unchanged. Cached-read reliability is declared, not inferred from vendor labels.
+Specific Qwen Flash creation quotes conflict with generic multiplier prose;
+the catalog records that discrepancy instead of silently fitting a discount.
+
+Next implementation boundary: request-price-band occupations including
+crossing compactor overshoot. Constant short/long or peak/off-peak vector
+projections do not solve the full state/time-dependent provider invoice.
+
 ## Price-vector sensitivity milestone (executed 2026-10-06)
 
 The [integrated price study](price-sensitivity-study.md) delivers exact core

@@ -73,7 +73,9 @@ def case_result(renewal: dict, ledger: RenewalLedger, output_mean: float, old_h:
     }
 
 
-def build_cases(price_metadata: dict) -> list[tuple[str, str, RenewalLedger, float]]:
+def build_cases(
+    price_metadata: dict, cache_conditions: tuple[float, ...] = (1.0,)
+) -> list[tuple[str, str, RenewalLedger, float]]:
     """Declare semantic intervention paths before stochastic confirmation."""
     base = RenewalLedger()
     cases = [
@@ -85,6 +87,18 @@ def build_cases(price_metadata: dict) -> list[tuple[str, str, RenewalLedger, flo
         )
         for entry in price_metadata["official_scenarios"]
     ]
+    for q in cache_conditions:
+        if q == 1:
+            continue
+        for entry in price_metadata["official_scenarios"]:
+            cases.append(
+                (
+                    f"{entry['id']}__q{q}",
+                    "official_price_cache_condition",
+                    replace(base, cache_hit=q, prices=Pricing(**entry["pricing_per_token"])),
+                    1.0,
+                )
+            )
     for component in PRICE_CATEGORIES:
         for factor in (0.8, 1.2):
             prices = replace(base.prices, **{component: getattr(base.prices, component) * factor})
@@ -290,6 +304,25 @@ def confirmation(cases: list, rows: dict, pool: dict, replicates: int, calls: in
                 "long_rate": float(selected_samples[name].mean()),
                 "meaning": "Total tariff-plus-declared-q effect, not measured real TTL performance",
             }
+        for name in selected_samples:
+            stem, separator, condition = name.partition("__q")
+            if not stem.endswith("_explicit"):
+                continue
+            partner = stem.removesuffix("_explicit") + "_implicit"
+            if separator:
+                partner += separator + condition
+            if partner not in selected_samples:
+                continue
+            # Compare TOTAL invoices, with both price projections separately
+            # retuned but the SAME cache uniforms and declared hit probability.
+            delta = selected_samples[name] - selected_samples[partner]
+            results[f"coupled_cache_mode/{mode}/{name}"] = {
+                "explicit_minus_implicit_usd_per_call": float(delta.mean()),
+                "paired_mc95_halfwidth": float(1.96 * delta.std(ddof=1) / np.sqrt(replicates)),
+                "explicit_rate": float(selected_samples[name].mean()),
+                "implicit_rate": float(selected_samples[partner].mean()),
+                "meaning": "Same-q quoted-price comparison, not measured cache-mode performance",
+            }
     return results
 
 
@@ -351,9 +384,19 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--replicates", type=int, default=512)
     parser.add_argument("--calls", type=int, default=4000)
+    parser.add_argument("--cache-conditions", type=float, nargs="+", default=[1.0])
+    parser.add_argument("--result-name", default="price-sensitivity-results")
     args = parser.parse_args()
     if args.replicates < 2 or args.calls < 1:
         parser.error("Use at least two trajectory replicates and positive ordinary calls.")
+    if any(not np.isfinite(q) or not 0 <= q <= 1 for q in args.cache_conditions):
+        parser.error("Cache conditions must be finite probabilities in [0,1].")
+    if not args.result_name or any(
+        not (character.isascii() and (character.isalnum() or character in "-_"))
+        for character in args.result_name
+    ):
+        parser.error("Use a nonempty ASCII artifact name containing only letters, digits, - or _.")
+    cache_conditions = tuple(sorted(set(args.cache_conditions) | {1.0}))
     root = Path(__file__).resolve().parents[1]
     destination = root / ".cache" / "price-sensitivity"
     destination.mkdir(parents=True, exist_ok=True)
@@ -368,7 +411,7 @@ def main() -> None:
     }
     base = RenewalLedger()
     old_h = float(analytic_rates(renewals[1.0], base, output_mean)["marked_minimum_threshold"])
-    cases = build_cases(metadata)
+    cases = build_cases(metadata, cache_conditions)
     rows = {}
     entries = {entry["id"]: entry for entry in metadata["official_scenarios"]}
     short = Pricing(**entries["sonnet55_5m"]["pricing_per_token"])
@@ -379,7 +422,7 @@ def main() -> None:
     )
     for name, kind, ledger, scale in cases:
         reference = old_h
-        if kind == "declared_sign_regime":
+        if kind in ("declared_sign_regime", "official_price_cache_condition"):
             # Price-only comparisons must start from this SAME mechanism's
             # baseline price optimum, not a global reference with different q/B.
             reference = float(
@@ -411,6 +454,10 @@ def main() -> None:
             "price_only": "Simulate one immutable token ledger per mechanism, then reprice",
             "uncertainty": "Paired conditional MC, not population/cross-model uncertainty",
             "cache_tariff": "Price and hypothetical q sensitivity; no measured TTL survival",
+            "official_cache_conditions": cache_conditions,
+            "tariff_scope": "Quoted-vector projections; no per-request tier/time switching",
+            "official_catalog_size": len(metadata["official_scenarios"]),
+            "official_price_metadata": metadata["official_scenarios"],
         },
         "analytic_cases": rows,
         "independent_confirmation": confirmations,
@@ -421,7 +468,7 @@ def main() -> None:
     }
     encoded = json.dumps(result, indent=2, allow_nan=False) + "\n"
     (destination / "results.json").write_text(encoded, encoding="utf-8")
-    (root / "docs/research/price-sensitivity-results.json").write_text(encoded, encoding="utf-8")
+    (root / "docs/research" / f"{args.result_name}.json").write_text(encoded, encoding="utf-8")
     print(f"Completed {len(rows)} cases in {result['runtime_seconds']:.2f}s", flush=True)
 
 

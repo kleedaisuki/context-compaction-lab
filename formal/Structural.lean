@@ -81,6 +81,20 @@ theorem optimized_price_superadditive {α : Type} (a : α → Ledger)
       invoice (fun i => p i + q i) (a candidate) := by
   rw [invoice_price_add]
   exact Nat.add_le_add (hp candidate) (hq candidate)
+/-- Revealed preference under reoptimization: increasing one component price cannot
+increase the usage of that component by an exactly optimal policy. b0 and b1 are
+both policies' invoices at the original prices; the raised invoice adds delta*u.
+No ordering of thresholds, state sizes, or other ledger coordinates is implied. -/
+theorem repriced_optimal_usage (b0 b1 delta u0 u1 : Nat)
+    (positiveDelta : 0 < delta) (oldOptimal : b0 ≤ b1)
+    (newOptimal : b1 + delta * u1 ≤ b0 + delta * u0) :
+    u1 ≤ u0 := by
+  have weightedComparison : delta * u1 ≤ delta * u0 := by
+    apply Nat.add_le_add_iff_left.mp
+    exact Nat.le_trans (Nat.add_le_add_right oldOptimal (delta * u1)) newOptimal
+  have reorderedComparison : u1 * delta ≤ u0 * delta := by
+    simpa [Nat.mul_comm] using weightedComparison
+  exact Nat.le_of_mul_le_mul_right reorderedComparison positiveDelta
 /-- Sum a finite list without requiring a measure-theory library. -/
 def sumBy {α : Type} (xs : List α) (f : α → Nat) : Nat :=
   (xs.map f).foldr (· + ·) 0
@@ -319,6 +333,7 @@ theorem threshold_not_increasing : fixtureCost 3 6 0 < fixtureCost 2 6 0 := by d
 #print axioms sumBy_add
 #print axioms sumBy_mul
 #print axioms sumBy_zero
+#print axioms repriced_optimal_usage
 #print axioms expected_invoice
 #print axioms occupancy_exchange
 #print axioms rational_cell_gate

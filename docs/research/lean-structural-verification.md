@@ -4,7 +4,7 @@ Date: 2026-10-06. Maintained source: `formal/Structural.lean`.
 
 ## What was actually verified
 
-Lean 4.33.1 checked 24 theorem declarations (21 structural/results laws and three finite-sum helpers) against its kernel. The file imports
+Lean 4.33.1 checked 25 theorem declarations (22 structural/results laws and three finite-sum helpers) against its kernel. The file imports
 only `Std`, without Mathlib, custom axioms, admitted proofs, or unsafe evaluation
 as a proof substitute. Two deterministic fixture inequalities use `decide`, whose
 finite computation produces kernel-checked proof terms.
@@ -49,6 +49,7 @@ a purported fixed-policy derivative.
 | `minimizer_price_add` | One candidate minimizing at both p and q also minimizes at p+q. | Optimal-policy price regions are closed under nonnegative rational combinations when combined with scaling. |
 | `minimizer_price_scale` | A minimizing candidate remains minimizing at k*p. | Those regions are cones, rather than isolated price-point observations. |
 | `optimized_price_superadditive` | `min_a p.a + min_a q.a <= (p+q).candidate` for every candidate. | The optimized lower envelope is superadditive and homogeneous, giving its concave price geometry under rational convex combinations. |
+| `repriced_optimal_usage` | Raising one positive price component, then reoptimizing, weakly decreases optimized usage of that component. | Revealed preference orders resource usage, not compact thresholds. |
 | `expected_invoice` | `p dot sum_x w(x)a(x) = sum_x w(x)(p dot a(x))` | Arbitrarily dependent finite task laws reduce to an expected ledger for price comparison. |
 | `occupancy_exchange` | `sum_t sum_j resident(t,j) = sum_j sum_t resident(t,j)` | A request-centered cache-residency bill can be attributed to artifact lifetimes exactly. |
 | `rational_cell_gate` | For integer x and a rational trigger in (k-1,k], num <= x*den iff k <= x. | Threshold gating depends on the ceiling, not on the sub-token position. |
@@ -73,6 +74,38 @@ tokens as the sum of weighted artifact lifetimes. Actual cache-hit weights can b
 included in the entries. The identity alone does not assert that every resident
 token is cached, nor establish a particular cache replacement mechanism.
 
+## Price increases under reoptimization: revealed preference
+
+`repriced_optimal_usage` considers an old optimal policy and a policy optimal after
+one component price increases by delta > 0. Let b0 and b1 be their invoices at the
+original prices, and u0 and u1 their usage of the repriced component. Exact optimality
+supplies the two inequalities
+
+```
+b0 <= b1,    b1 + delta*u1 <= b0 + delta*u0.
+```
+
+Lean derives `u1 <= u0`: replace the new policy's baseline b1 with the lower old
+baseline b0, cancel the common baseline, and cancel the positive multiplier delta.
+The proof is general order and arithmetic reasoning; it is not a pair of numerical
+fixtures. Its axiom audit reports only the standard `propext` dependency.
+
+For fixed correlated finite task weights, u is an expected ledger numerator and b
+is the corresponding expected invoice numerator. Clearing common positive rational
+denominators gives exactly the same usage ordering. The old and raised-price
+optimizations must use the same feasible policy set, external task law, and ledger
+semantics, with only one component price changed. Approximate solver optimality,
+sample-selection error, changed task distributions, changed providers, and changed
+feasibility contracts are not covered by the exact hypotheses.
+
+Importantly, the theorem does not say that the chosen compact trigger increases or
+decreases. A policy can change other controls or switch branches while reducing
+only the repriced resource. Other ledger coordinates may rise. The threshold itself
+can move in either direction; resource monotonicity is the robust structural law.
+Together with price homogeneity and optimized-price superadditivity, this provides
+finite/rational support for the lower-envelope interpretation of optimized costs.
+No real-valued envelope derivative, differentiability, or full analytic sensitivity
+model is formalized here.
 ## Central threshold quantization theorem
 
 Represent a positive trigger exactly as `num / den`, with `den > 0`, and let k be
